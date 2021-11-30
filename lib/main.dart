@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:match_mates/pages/detail_chat.dart';
 import 'package:match_mates/pages/home_page.dart';
 
 void main() {
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomePage.routeNamed,
       routes: {
         HomePage.routeNamed: (context) => const HomePage(),
+        DetailsChat.routeNamed: (context) => const DetailsChat(),
       },
     );
   }
