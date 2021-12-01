@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:match_mates/pages/chat_menu_pages.dart';
+import 'package:match_mates/pages/settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,9 +20,7 @@ class _HomePageState extends State<HomePage> {
     Center(
       child: Text("Not Yet"),
     ),
-    Center(
-      child: Text("Not Yet"),
-    ),
+    SettingsPage(),
   ];
   @override
   Widget build(BuildContext context) {
