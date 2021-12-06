@@ -1,13 +1,9 @@
 //just for testing it will be deleted when the rea data is ready
-class TextChat {
-  bool user;
-  String chatString;
-  TextChat({required this.chatString, required this.user});
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-var chatlist = [
-  TextChat(chatString: "halo kmu siapa", user: false),
-  TextChat(chatString: "ini dengan siapa ya", user: true),
-  TextChat(chatString: "ooga booga", user: false),
-  TextChat(chatString: "OOGA BOOGA", user: true),
-];
+class TextChat {
+  String user;
+  String chatString;
+  Timestamp date;
+  TextChat({required this.chatString, required this.user, required this.date});
+}

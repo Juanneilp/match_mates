@@ -9,7 +9,8 @@ class SettingsPage extends StatelessWidget {
     return Stack(
       children: const <Widget>[
         StackProfile(),
-        Positioned(bottom: 0, child: BottomBody())
+        Positioned(top: 30, bottom: 20, child: CategoryBox()),
+        Positioned(bottom: 10, child: SettingsList())
       ],
     );
   }
@@ -22,9 +23,19 @@ class BottomBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CategoryBox(),
+        Expanded(child: SafeArea(child: CategoryBox())),
+        SettingsList(),
       ],
     );
+  }
+}
+
+class SettingsList extends StatelessWidget {
+  const SettingsList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(child: SwitchListTile(value: false, onChanged: (value) {}));
   }
 }
 
