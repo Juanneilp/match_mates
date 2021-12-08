@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -23,7 +24,7 @@ class BottomBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Expanded(child: SafeArea(child: CategoryBox())),
+        //Expanded(child: SafeArea(child: CategoryBox())),
         SettingsList(),
       ],
     );
@@ -96,27 +97,41 @@ class StackProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: <Widget>[
-        const HalfCircle(),
-        const Positioned(top: 80, left: 30, right: 30, child: BannerProfile()),
-        Positioned(
-          top: 40,
-          left: 32,
-          child: SafeArea(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.network(
-                "https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg",
-                height: 80,
-                width: 80,
-              ),
-            ),
-          ),
-        )
-      ],
-    );
+    return FutureBuilder<QuerySnapshot>(
+        future: FirebaseFirestore.instance
+            .collection('users')
+            .doc('iZN81Glj4JIaCXi2Wm2s')
+            .collection('user')
+            .get(),
+        builder: (_, snapshot) {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              const HalfCircle(),
+              const Positioned(
+                  top: 80, left: 30, right: 30, child: BannerProfile()),
+              Positioned(
+                top: 40,
+                left: 32,
+                child: SafeArea(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: InkWell(
+                      onTap: () {
+                        print(snapshot.data!.docs.first.get('name'));
+                      },
+                      child: Image.network(
+                        snapshot.data!.docs.first.get('imagelinks'),
+                        height: 80,
+                        width: 80,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          );
+        });
   }
 }
 
