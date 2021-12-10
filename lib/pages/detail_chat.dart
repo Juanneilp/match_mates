@@ -19,9 +19,8 @@ class DetailsChat extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.blue.shade100,
           flexibleSpace: HeaderChat(
-            name: 'constantiantum',
-            imageLink:
-                'https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg',
+            name: name.name,
+            imageLink: name.imagelinks,
           ),
         ),
         body: SafeArea(
