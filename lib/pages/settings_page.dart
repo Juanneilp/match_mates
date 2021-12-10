@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/category_dummy.dart';
+import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/provider/profile_provider.dart';
+import 'package:match_mates/service/auth_service.dart';
 import 'package:match_mates/widget/category_chip.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
@@ -11,21 +13,27 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthServices>(context);
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const <Widget>[
+      children: <Widget>[
         Flexible(child: BannerProfile()),
         Flexible(child: CategoryBox()),
         Flexible(child: SettingsList()),
         Center(
           child: SizedBox(
-            height: 25,
-            width: 60,
+            height: 35,
+            width: 100,
             child: Material(
-              color: Colors.blue,
-              child: InkWell(
+              color: Colors.lightBlueAccent,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await authService.signOut();
+                  Navigator.pushReplacementNamed(context, SignInPage.routeNamed);
+                },
                 child: Text(
                   "Log Out",
                   textAlign: TextAlign.center,
@@ -125,9 +133,11 @@ class BannerProfile extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         )
-                      : const Text("Name :",
+                      : const Text(
+                          "Name :",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                 ],
               )
             ],
