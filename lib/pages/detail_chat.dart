@@ -10,38 +10,46 @@ class DetailsChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade100,
-        flexibleSpace: const HeaderChat(),
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: <Widget>[
-                Expanded(
-                  child: Consumer(
-                    builder: (context, List<TextChat> snapshot, child) {
-                      if (snapshot.isNotEmpty) {
-                        return ListView.builder(
-                          itemCount: snapshot.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ChatText(textChat: snapshot[index]);
-                          },
-                        );
-                      } else {
-                        return const Center(
-                          child: Text("no data yet"),
-                        );
-                      }
-                    },
+    return StreamProvider<TextChat>(
+      create: (_) => ChatStreamProvider(streamTunel: 'massage').getlistChat(),
+      initialData: TextChat(reciver: '', sender: '', chat: []),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue.shade100,
+          flexibleSpace: HeaderChat(
+            name: 'constantiantum',
+            imageLink:
+                'https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg',
+          ),
+        ),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Consumer<TextChat>(
+                      builder: (context, TextChat snapshot, child) {
+                        if (snapshot.chat.isNotEmpty) {
+                          return ListView.builder(
+                            itemCount: snapshot.chat.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ChatText(chat: snapshot.chat[index]);
+                            },
+                          );
+                        } else {
+                          return const Center(
+                            child: Text("no data yet"),
+                          );
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const ChatInput()
-          ],
+                ],
+              ),
+              const ChatInput()
+            ],
+          ),
         ),
       ),
     );
@@ -49,7 +57,10 @@ class DetailsChat extends StatelessWidget {
 }
 
 class HeaderChat extends StatelessWidget {
-  const HeaderChat({Key? key}) : super(key: key);
+  final String imageLink;
+  final String name;
+  const HeaderChat({Key? key, required this.imageLink, required this.name})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +72,12 @@ class HeaderChat extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: Image.network(
-                "https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg",
+                imageLink,
                 height: 40,
                 width: 40,
               ),
             ),
-            const Padding(
-                padding: EdgeInsets.all(8), child: Text("KONSTANTIATUM")),
+            Padding(padding: const EdgeInsets.all(8), child: Text(name)),
           ],
         ),
       ),
@@ -76,13 +86,13 @@ class HeaderChat extends StatelessWidget {
 }
 
 class ChatText extends StatelessWidget {
-  final TextChat textChat;
-  final currentuser = "gewh";
-  const ChatText({Key? key, required this.textChat}) : super(key: key);
+  final Chat chat;
+  final currentuser = "user";
+  const ChatText({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (textChat.user != currentuser) {
+    if (chat.owner != currentuser) {
       return Align(
         alignment: Alignment.topLeft,
         child: Container(
@@ -92,7 +102,7 @@ class ChatText extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(25)),
               gradient: LinearGradient(colors: [Colors.pink, Colors.purple])),
           child: Text(
-            textChat.chatString,
+            chat.content,
             style: const TextStyle(color: Colors.black),
           ),
         ),
@@ -106,8 +116,8 @@ class ChatText extends StatelessWidget {
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
               gradient: LinearGradient(colors: [Colors.purple, Colors.pink])),
-          child: Text(textChat.chatString,
-              style: const TextStyle(color: Colors.black)),
+          child:
+              Text(chat.content, style: const TextStyle(color: Colors.black)),
         ),
       );
     }
@@ -140,8 +150,10 @@ class _ChatInputState extends State<ChatInput> {
                 icon: const Icon(Icons.send),
                 onPressed: () {
                   _controller.clear;
-                  ChatStreamProvider()
-                      .adduser(_controller.text, 'gewh', Timestamp.now());
+                  ChatStreamProvider(streamTunel: 'massage').adduser(Chat(
+                      content: _controller.text,
+                      createdAt: Timestamp.now(),
+                      owner: 'user'));
                 },
               ),
             ),

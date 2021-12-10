@@ -3,25 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:match_mates/model/data_dummy.dart';
 
 class ChatStreamProvider {
+  final String streamTunel;
+  ChatStreamProvider({required this.streamTunel});
   final _firestore = FirebaseFirestore.instance;
-  Stream<List<TextChat>> getlistChat() {
+  Stream<TextChat> getlistChat() {
     return _firestore
-        .collection('massage')
-        .orderBy('time', descending: false)
+        .collection(streamTunel)
+        .doc('yAXau8FTMDhAPmO5OjTU')
         .snapshots()
-        .map((event) => event.docs
-            .map((e) => TextChat(
-                chatString: e.get('text'),
-                user: e.get('user'),
-                date: e.get('time')))
-            .toList());
+        .map((event) => TextChat.fromJson(event.data()!));
   }
 
-  void adduser(String text, String user, Timestamp time) {
-    _firestore.collection('massage').add({
-      'text': text,
-      'user': user,
-      'time': time,
+  void adduser(Chat chat) async {
+    await _firestore
+        .collection(streamTunel)
+        .doc('yAXau8FTMDhAPmO5OjTU')
+        .update({
+      'chat': FieldValue.arrayUnion([chat.toJson()])
     });
   }
 }
