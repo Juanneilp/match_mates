@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/detail_chat.dart';
 import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +15,7 @@ class ChatMenu extends StatelessWidget {
               ? ListView.builder(
                   itemCount: snapshot.user.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return UserTile(
-                        imagelink: snapshot.user[index].imagelinks,
-                        name: snapshot.user[index].name);
+                    return UserTile(name: snapshot.user[index]);
                   },
                 )
               : const Center(
@@ -27,11 +26,9 @@ class ChatMenu extends StatelessWidget {
 }
 
 class UserTile extends StatelessWidget {
-  final String imagelink;
-  final String name;
+  final User name;
   const UserTile({
     Key? key,
-    required this.imagelink,
     required this.name,
   }) : super(key: key);
 
@@ -40,12 +37,12 @@ class UserTile extends StatelessWidget {
     return ListTile(
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(25),
-          child: Image.network(imagelink),
+          child: Image.network(name.imagelinks),
         ),
-        title: Text(name),
+        title: Text(name.name),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushNamed(context, DetailsChat.routeNamed);
+          Navigator.pushNamed(context, DetailsChat.routeNamed, arguments: name);
         });
   }
 }

@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/data_dummy.dart';
+import 'package:match_mates/model/user.dart';
 import 'package:match_mates/provider/chat_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailsChat extends StatelessWidget {
-  const DetailsChat({Key? key}) : super(key: key);
+  const DetailsChat({Key? key, required this.name}) : super(key: key);
   static const routeNamed = "/details_chat";
+  final User name;
 
   @override
   Widget build(BuildContext context) {
