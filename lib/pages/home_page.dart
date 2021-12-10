@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 200,
+              height: 180,
               padding: EdgeInsets.symmetric(vertical: 5),
               child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -39,28 +39,40 @@ class HomePage extends StatelessWidget {
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Image.network(
-                            "https://picsum.photos/id/239/200/300")),
+                          "https://picsum.photos/id/239/200/300",
+                          width: 240,
+                          fit: BoxFit.cover,
+                        )),
                   ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Image.network(
-                            "https://picsum.photos/id/231/200/300")),
+                          "https://picsum.photos/id/231/200/300",
+                          width: 240,
+                          fit: BoxFit.cover,
+                        )),
                   ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Image.network(
-                            "https://picsum.photos/id/232/200/300")),
+                          "https://picsum.photos/id/232/200/300",
+                          width: 240,
+                          fit: BoxFit.cover,
+                        )),
                   ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Image.network(
-                            "https://picsum.photos/id/235/200/300")),
+                          "https://picsum.photos/id/235/200/300",
+                          width: 240,
+                          fit: BoxFit.cover,
+                        )),
                   ),
                 ],
               ),
@@ -102,27 +114,7 @@ class HomePage extends StatelessWidget {
                       icon: Icon(Icons.eleven_mp),
                       iconSize: 70,
                     ),
-                    Text('Games')
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.eleven_mp),
-                      iconSize: 70,
-                    ),
-                    Text('yeah')
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.eleven_mp),
-                      iconSize: 70,
-                    ),
-                    Text('yeah')
+                    Text('Hangout')
                   ],
                 ),
               ],
@@ -141,25 +133,107 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    height: 80,
-                    width: 150,
-                    child: ListView(
-                      children: [
-                        Card(
-                          child: Text('Gaming'),
+            Container(
+              height: 60,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 100,
+                              child: Center(
+                                child: Text('Gaming'),
+                              ),
+                            )
+                          ],
                         ),
-                        Card(
-                          child: Text('Musik'),
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 100,
+                              child: Center(
+                                child: Text('Film'),
+                              ),
+                            )
+                          ],
                         ),
-                      ],
-                    )
-                ),
-              ],
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 100,
+                              child: Center(
+                                child: Text('Musik'),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            // Row(
+            //   children: [
+            //     Container(
+            //         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            //         height: 60,
+            //         width: 200,
+            //         child: ListView(
+            //           scrollDirection: Axis.horizontal,
+            //           children: [
+            //             Row(
+            //               children: [
+            //                 Card(
+            //                   child: Container(
+            //                       height: 50,
+            //                       width: 100,
+            //                       child: Center(
+            //                         child: Text('Gaming'),
+            //                       )
+            //                   ),
+            //                 ),
+            //                 Card(
+            //                   child: Container(
+            //                       height: 50,
+            //                       width: 100,
+            //                       child: Center(
+            //                         child: Text('Film'),
+            //                       )
+            //                   ),
+            //                 ),
+            //               ],
+            //             )
+            //           ],
+            //         )
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 50,
             ),
