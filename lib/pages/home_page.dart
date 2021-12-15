@@ -11,7 +11,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Match Mates'),
+        backgroundColor: Colors.white,
+        title: Text('Match Mates', style: TextStyle(color: Colors.black),),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -20,6 +21,7 @@ class HomePage extends StatelessWidget {
             },
             icon: Icon(
               CupertinoIcons.bell,
+              color: Colors.black,
             ),
           )
         ],
@@ -123,7 +125,7 @@ class HomePage extends StatelessWidget {
               height: 30,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8, bottom: 8),
               child: Row(
                 children: [
                   Text(
@@ -134,7 +136,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: 60,
+              color: Colors.black12,
+              height: 80,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -198,42 +201,6 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            // Row(
-            //   children: [
-            //     Container(
-            //         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            //         height: 60,
-            //         width: 200,
-            //         child: ListView(
-            //           scrollDirection: Axis.horizontal,
-            //           children: [
-            //             Row(
-            //               children: [
-            //                 Card(
-            //                   child: Container(
-            //                       height: 50,
-            //                       width: 100,
-            //                       child: Center(
-            //                         child: Text('Gaming'),
-            //                       )
-            //                   ),
-            //                 ),
-            //                 Card(
-            //                   child: Container(
-            //                       height: 50,
-            //                       width: 100,
-            //                       child: Center(
-            //                         child: Text('Film'),
-            //                       )
-            //                   ),
-            //                 ),
-            //               ],
-            //             )
-            //           ],
-            //         )
-            //     ),
-            //   ],
-            // ),
             SizedBox(
               height: 50,
             ),
@@ -271,6 +238,10 @@ class HomePage extends StatelessWidget {
                                 const SizedBox(width: 5),
                                 Text('Yaya'),
                               ],
+                            ),
+                            SizedBox(height: 30,),
+                            Center(
+                              child: Text('Talent sangat professional'),
                             )
                           ],
                         ),

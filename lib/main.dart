@@ -10,6 +10,7 @@ import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/service/auth_service.dart';
 import 'package:match_mates/widget/wrapper.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -33,17 +34,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ListProfileProvider>(
             create: (_) => ListProfileProvider(username: 'username'))
       ],
-      builder: (context, child) => MaterialApp(
-        initialRoute: Wrapper.routeNamed,
-        routes: {
-          Wrapper.routeNamed: (context) => Wrapper(),
-          SignInPage.routeNamed: (context) => SignInPage(),
-          SignUpPage.routeNamed: (context) => SignUpPage(),
-          BottomNavigation.routeNamed: (context) => const BottomNavigation(),
-          DetailsChat.routeNamed: (context) => DetailsChat(
-              name: ModalRoute.of(context)?.settings.arguments as User),
-          NotificationPage.routeNamed: (context) => NotificationPage(),
-        },
+      builder: (context, child) => OverlaySupport(
+        child: MaterialApp(
+          initialRoute: Wrapper.routeNamed,
+          routes: {
+            Wrapper.routeNamed: (context) => Wrapper(),
+            SignInPage.routeNamed: (context) => SignInPage(),
+            SignUpPage.routeNamed: (context) => SignUpPage(),
+            BottomNavigation.routeNamed: (context) => const BottomNavigation(),
+            DetailsChat.routeNamed: (context) => DetailsChat(
+                name: ModalRoute.of(context)?.settings.arguments as User),
+            NotificationPage.routeNamed: (context) => NotificationPage(),
+          },
+        ),
       ),
     );
   }

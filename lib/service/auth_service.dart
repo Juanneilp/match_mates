@@ -8,7 +8,7 @@ class AuthServices {
     if (user == null) {
       return null;
     }
-    return Login(uid: '', email: user.email);
+    return Login(user.uid, user.email);
   }
 
   Stream<Login?>? get user {
