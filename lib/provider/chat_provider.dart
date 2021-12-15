@@ -8,17 +8,14 @@ class ChatStreamProvider {
   final _firestore = FirebaseFirestore.instance;
   Stream<TextChat> getlistChat() {
     return _firestore
-        .collection(streamTunel)
-        .doc('yAXau8FTMDhAPmO5OjTU')
+        .collection('massage')
+        .doc(streamTunel)
         .snapshots()
         .map((event) => TextChat.fromJson(event.data()!));
   }
 
   void adduser(Chat chat) async {
-    await _firestore
-        .collection(streamTunel)
-        .doc('yAXau8FTMDhAPmO5OjTU')
-        .update({
+    await _firestore.collection('massage').doc(streamTunel).update({
       'chat': FieldValue.arrayUnion([chat.toJson()])
     });
   }

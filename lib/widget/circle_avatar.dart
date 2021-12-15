@@ -21,9 +21,9 @@ class ProfilePicture extends StatelessWidget {
                 height: size,
                 width: size,
               )
-            : const Icon(
+            : Icon(
                 Icons.account_circle_rounded,
-                size: 80,
+                size: size,
               ),
       ),
     );

@@ -15,6 +15,7 @@ class CategoryChip extends StatelessWidget {
           category,
           style: const TextStyle(fontSize: 15),
         ),
+        elevation: 4,
         backgroundColor: Color(int.parse(color, radix: 16)),
       ),
     );

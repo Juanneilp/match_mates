@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:match_mates/model/data_dummy.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/provider/chat_provider.dart';
+import 'package:match_mates/provider/profile_provider.dart';
+import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
 class DetailsChat extends StatelessWidget {
   const DetailsChat({Key? key, required this.name}) : super(key: key);
   static const routeNamed = "/details_chat";
-  final User name;
+  final Friend name;
 
   @override
   Widget build(BuildContext context) {
     return StreamProvider<TextChat>(
-      create: (_) => ChatStreamProvider(streamTunel: 'massage').getlistChat(),
+      create: (_) =>
+          ChatStreamProvider(streamTunel: name.tunelid).getlistChat(),
       initialData: TextChat(reciver: '', sender: '', chat: []),
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.blue.shade100,
           flexibleSpace: HeaderChat(
             name: name.name,
@@ -48,7 +52,9 @@ class DetailsChat extends StatelessWidget {
                   ),
                 ],
               ),
-              const ChatInput()
+              ChatInput(
+                tunel: name.tunelid,
+              )
             ],
           ),
         ),
@@ -68,16 +74,20 @@ class HeaderChat extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Image.network(
-                imageLink,
-                height: 40,
-                width: 40,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
             ),
+            ProfilePicture(linkImg: imageLink, size: 35),
             Padding(padding: const EdgeInsets.all(8), child: Text(name)),
           ],
         ),
@@ -88,12 +98,12 @@ class HeaderChat extends StatelessWidget {
 
 class ChatText extends StatelessWidget {
   final Chat chat;
-  final currentuser = "user";
   const ChatText({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (chat.owner != currentuser) {
+    final currentuser = Provider.of<ProfileProvider>(context).user;
+    if (chat.owner != currentuser.name) {
       return Align(
         alignment: Alignment.topLeft,
         child: Container(
@@ -126,7 +136,8 @@ class ChatText extends StatelessWidget {
 }
 
 class ChatInput extends StatefulWidget {
-  const ChatInput({Key? key}) : super(key: key);
+  final String tunel;
+  const ChatInput({Key? key, required this.tunel}) : super(key: key);
 
   @override
   _ChatInputState createState() => _ChatInputState();
@@ -136,6 +147,7 @@ class _ChatInputState extends State<ChatInput> {
   final _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final owner = Provider.of<ProfileProvider>(context).user;
     return Align(
       alignment: Alignment.bottomCenter,
       child: SizedBox(
@@ -150,11 +162,14 @@ class _ChatInputState extends State<ChatInput> {
               suffixIcon: IconButton(
                 icon: const Icon(Icons.send),
                 onPressed: () {
-                  _controller.clear;
-                  ChatStreamProvider(streamTunel: 'massage').adduser(Chat(
-                      content: _controller.text,
-                      createdAt: Timestamp.now(),
-                      owner: 'user'));
+                  if (_controller.text == "") {
+                  } else {
+                    ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
+                        content: _controller.text,
+                        createdAt: Timestamp.now(),
+                        owner: owner.name));
+                    _controller.clear();
+                  }
                 },
               ),
             ),
