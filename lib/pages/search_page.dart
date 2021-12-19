@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
+import 'package:match_mates/provider/db_provider.dart';
 import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/resources/enum.dart';
-import 'package:match_mates/service/user_service.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +74,7 @@ class _SearchPageState extends State<SearchPage> {
                   } else if (state.state == ResultState.error) {
                     return Center(child: Text(state.massage));
                   } else if (state.state == ResultState.noData) {
-                    return Center(child: Text("no data"));
+                    return const Center(child: Text("no data"));
                   } else {
                     return const Text("Something wrong");
                   }
@@ -105,8 +105,14 @@ class BuildTileUser extends StatelessWidget {
         title: Text(user.name),
         trailing: const Icon(Icons.arrow_right),
         onTap: () async {
-          var tunelid = UserService()
-              .createConnection(user, 'QABMoeKpGnWFyMfixZmTfkORvIO2');
+          var tunelid = Provider.of<ProfileProvider>(context, listen: false)
+              .connection(
+                  user,
+                  Provider.of<DatabaseProvider>(context, listen: false)
+                      .user
+                      .uid);
+          // var tunelid = UserService().createConnection(user,
+          //     Provider.of<DatabaseProvider>(context, listen: false).user.uid);
           //Provider.of<ProfileProvider>(context, listen: false).user.uid);
           var friends = Friend(
               nameid: user.uid,

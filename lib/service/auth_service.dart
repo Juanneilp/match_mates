@@ -9,24 +9,23 @@ class AuthServices {
     if (user == null) {
       return null;
     }
-    return Login(uid: '', email: user.email);
+    return Login(user.uid, user.email);
   }
 
   Stream<Login?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-  Future<Login?> signUp(String email, String password) async {
+  Future<Login?> signUp(String email, String password, String age) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-
+    UserService().createUser(age);
     return _userFromFirebase(credential.user);
   }
 
   Future<Login?> signIn(String email, String password) async {
     final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    UserService().createUser();
     return _userFromFirebase(credential.user);
   }
 

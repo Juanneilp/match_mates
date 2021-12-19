@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:match_mates/model/user.dart';
+import 'package:match_mates/resources/db.dart';
 
 class UserService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
@@ -9,7 +10,7 @@ class UserService {
     return _firebaseAuth.currentUser;
   }
 
-  void createUser() async {
+  void createUser(String age) async {
     final user = _firebaseAuth.currentUser;
     final userRef = _firestore.collection('users').doc(user!.uid);
     userRef.get().then((value) async => {
@@ -18,11 +19,18 @@ class UserService {
           else
             {
               await userRef.set(User(
+                      age: age,
                       name: user.email ?? "",
                       imagelinks: "",
                       friends: [],
                       uid: user.uid)
-                  .toJson())
+                  .toJson()),
+              await DatabaseHelper().insertUser(User(
+                  age: age,
+                  name: user.email ?? "",
+                  imagelinks: "",
+                  friends: [],
+                  uid: user.uid))
             }
         });
   }
@@ -50,6 +58,8 @@ class UserService {
             .toJson()
       ])
     });
+    await DatabaseHelper().insertFriend(Friend(
+        nameid: recive.uid, imagelinks: "", name: recive.name, tunelid: id));
     return id;
   }
 }

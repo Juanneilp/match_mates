@@ -13,7 +13,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -75,11 +74,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: 330,
                         child: Column(
                           children: <Widget>[
-                            // TextField(
-                            //   controller: _fullNameController,
-                            //   decoration:
-                            //       InputDecoration(labelText: 'Full Name'),
-                            // ),
+                            TextField(
+                              controller: _fullNameController,
+                              decoration:
+                                  InputDecoration(labelText: 'Full Name'),
+                            ),
                             SizedBox(
                               height: 10,
                             ),
@@ -124,12 +123,16 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: Text('SIGN UP'),
                             onPressed: () async {
                               try {
-                                await authService.signUp(_emailController.text,
-                                    _passwordController.text);
-                                Navigator.pushReplacementNamed(context, SignInPage.routeNamed);
+                                await authService.signUp(
+                                    _emailController.text,
+                                    _passwordController.text,
+                                    _fullNameController.text);
+                                Navigator.pushReplacementNamed(
+                                    context, SignInPage.routeNamed);
                               } catch (e) {
-                                final snackBar =
-                                    SnackBar(content: Text('Email dan Password tidak valid'));
+                                final snackBar = SnackBar(
+                                    content:
+                                        Text('Email dan Password tidak valid'));
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               } finally {
@@ -157,6 +160,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
+    _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();

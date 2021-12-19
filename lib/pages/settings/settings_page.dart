@@ -3,6 +3,7 @@ import 'package:match_mates/model/category_dummy.dart';
 import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/pages/settings/settings_edit_page.dart';
 import 'package:match_mates/provider/profile_provider.dart';
+import 'package:match_mates/provider/shared_preferances.dart';
 import 'package:match_mates/service/auth_service.dart';
 import 'package:match_mates/widget/category_chip.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
@@ -15,7 +16,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    final authService = Provider.of<AuthServices>(context);
+    final authService = Provider.of<AuthServices>(context,listen: false);
     return SafeArea(
       child: ListView(
         children: <Widget>[
@@ -155,22 +156,27 @@ class SettingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text(
-          "Settings",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        Flexible(
-          child: SwitchListTile(
-            value: false,
-            onChanged: (value) {},
-            title: const Text("contoh setting"),
+    return Consumer(
+      builder: (_, PreferancesProvider snapshot, child) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            "Settings",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
+          Flexible(
+            child: SwitchListTile(
+              value: snapshot.isDarktheme,
+              onChanged: (value) {
+                Provider.of<PreferancesProvider>(context, listen: false)
+                    .enebleDarkTheme(value);
+              },
+              title: const Text("Dark Theme"),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -19,10 +19,14 @@ class ListProfileProvider extends ChangeNotifier {
           .collection('users')
           .where('name', isEqualTo: username)
           .get();
+      print(username);
+      print(result.docs.isNotEmpty);
       if (result.docs.isNotEmpty) {
         _state = ResultState.hasData;
         notifyListeners();
-        return _user = result.docs.map((e) => User.fromJson(e.data())).toList();
+        _user = result.docs.map((e) => User.fromJson(e.data())).toList();
+        print(_user);
+        return _user;
       } else {
         _state = ResultState.noData;
         notifyListeners();
