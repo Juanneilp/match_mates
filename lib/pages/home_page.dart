@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:match_mates/pages/echat/list_echat.dart';
+import 'package:match_mates/pages/hangout/list_hangout.dart';
+import 'package:match_mates/widget/testimonial_card.dart';
 
 import 'notification_page.dart';
 
@@ -12,7 +15,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Match Mates', style: TextStyle(color: Colors.black),),
+        title: Text(
+          'Match Mates',
+          style: TextStyle(color: Colors.black),
+        ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -96,30 +102,43 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.eleven_mp),
-                      iconSize: 70,
+            Container(
+              height: 120,
+              child: Row(
+                children: [
+                  Flexible(
+                      flex: 2,
+                      child: GestureDetector(
+                        child: Card(
+                          child: Container(
+                            color: Colors.blueGrey,
+                            child: Center(
+                              child: Text('E-Chat', style: TextStyle(color: Colors.white),),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, EChatListPage.routeNamed);
+                        },
+                      )),
+                  Flexible(
+                    flex: 2,
+                    child: GestureDetector(
+                      child: Card(
+                        child: Container(
+                          color: Colors.indigoAccent,
+                          child: Center(
+                            child: Text('Hangout', style: TextStyle(color: Colors.white),),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(context, HangoutListPage.routeNamed);
+                      },
                     ),
-                    Text('E-Chat')
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.eleven_mp),
-                      iconSize: 70,
-                    ),
-                    Text('Hangout')
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 30,
@@ -215,41 +234,13 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              height: 200,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Card(
-                      child: Container(
-                        padding: EdgeInsets.all(15),
-                        width: 250,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.account_circle,
-                                  color: Colors.green,
-                                  size: 35,
-                                ),
-                                const SizedBox(width: 5),
-                                Text('Yaya'),
-                              ],
-                            ),
-                            SizedBox(height: 30,),
-                            Center(
-                              child: Text('Talent sangat professional'),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            Row(
+              children: [
+                Container(
+                  height: 200,
+                  child: TestimonialCard()
+                ),
+              ],
             )
           ],
         ),

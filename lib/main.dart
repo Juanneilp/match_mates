@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/bottom_nav.dart';
 import 'package:match_mates/pages/detail_chat.dart';
+import 'package:match_mates/pages/echat/list_echat.dart';
+import 'package:match_mates/pages/hangout/list_hangout.dart';
 import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/pages/login/signup_page.dart';
 import 'package:match_mates/pages/notification_page.dart';
@@ -13,7 +15,7 @@ import 'package:match_mates/widget/wrapper.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
             DetailsChat.routeNamed: (context) => DetailsChat(
                 name: ModalRoute.of(context)?.settings.arguments as User),
             NotificationPage.routeNamed: (context) => NotificationPage(),
+            EChatListPage.routeNamed: (context) => EChatListPage(),
+            HangoutListPage.routeNamed: (context) => HangoutListPage()
           },
         ),
       ),
