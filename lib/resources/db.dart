@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:match_mates/model/user.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -79,6 +81,12 @@ class DatabaseHelper {
       where: 'id =?',
       whereArgs: [id],
     );
+  }
+
+  Future<void> updateImg(String imglinks) async {
+    final db = await database;
+    await db!.update(_tblprofile, {'imglinks': imglinks},
+        where: 'iduser = ?', whereArgs: [1]);
   }
 
   //remove Friends from database with id

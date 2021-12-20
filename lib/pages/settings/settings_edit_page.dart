@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/provider/profile_provider.dart';
+import 'package:match_mates/resources/editpage.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +27,19 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
       body: SafeArea(
           child: ListView(
         children: <Widget>[
-          Center(
-              child: ProfilePicture(linkImg: widget.user.imagelinks, size: 80)),
+          GestureDetector(
+            onTap: () async {
+              File file = await selectFile();
+              String url = await uploadFile(file);
+              Provider.of<ProfileProvider>(context, listen: false)
+                  .setImgUser(url);
+            },
+            child: Consumer<ProfileProvider>(
+              builder: (context, snapshot, child) => Center(
+                  child: ProfilePicture(
+                      linkImg: widget.user.imagelinks, size: 80)),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text("Fill your name"),

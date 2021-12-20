@@ -16,10 +16,10 @@ class AuthServices {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-  Future<Login?> signUp(String email, String password, String age) async {
+  Future<Login?> signUp(String email, String password, String name) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    UserService().createUser(age);
+    UserService().createUser(name);
     return _userFromFirebase(credential.user);
   }
 

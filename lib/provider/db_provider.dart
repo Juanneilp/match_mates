@@ -21,7 +21,7 @@ class DatabaseProvider extends ChangeNotifier {
   List<Friend> get listUser => _listFriend ?? [];
   User? _user;
   User get user =>
-      _user ?? User(name: "", age: "", uid: "", imagelinks: "", friends: []);
+      _user ?? User(name: "", uid: "", imagelinks: "", friends: []);
 
   //getting list friends from first time
   void _getListFriends() async {

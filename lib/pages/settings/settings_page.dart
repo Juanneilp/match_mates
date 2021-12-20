@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    final authService = Provider.of<AuthServices>(context,listen: false);
+    final authService = Provider.of<AuthServices>(context, listen: false);
     return SafeArea(
       child: ListView(
         children: <Widget>[
@@ -29,7 +29,7 @@ class SettingsPage extends StatelessWidget {
                   child: Container(
                     width: width,
                     height: height * 0.2,
-                    color: Colors.pink,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 Align(

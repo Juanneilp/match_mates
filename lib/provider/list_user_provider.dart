@@ -17,15 +17,12 @@ class ListProfileProvider extends ChangeNotifier {
       notifyListeners();
       var result = await _firestore
           .collection('users')
-          .where('name', isEqualTo: username)
+          .where('name', isGreaterThanOrEqualTo: username)
           .get();
-      print(username);
-      print(result.docs.isNotEmpty);
       if (result.docs.isNotEmpty) {
         _state = ResultState.hasData;
         notifyListeners();
         _user = result.docs.map((e) => User.fromJson(e.data())).toList();
-        print(_user);
         return _user;
       } else {
         _state = ResultState.noData;

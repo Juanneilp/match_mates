@@ -26,7 +26,7 @@ class DetailsChat extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.blue.shade100,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           flexibleSpace: Row(
             children: [
               HeaderChat(
@@ -40,28 +40,30 @@ class DetailsChat extends StatelessWidget {
         body: SafeArea(
           child: Stack(
             children: [
-              Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Consumer<TextChat>(
-                      builder: (context, TextChat snapshot, child) {
-                        if (snapshot.chat.isNotEmpty) {
-                          return ListView.builder(
-                            reverse: true,
-                            itemCount: snapshot.chat.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ChatText(chat: snapshot.chat[index]);
-                            },
-                          );
-                        } else {
-                          return const Center(
-                            child: Text("no data yet"),
-                          );
-                        }
-                      },
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Consumer<TextChat>(
+                        builder: (context, TextChat snapshot, child) {
+                          if (snapshot.chat.isNotEmpty) {
+                            return ListView.builder(
+                              itemCount: snapshot.chat.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ChatText(chat: snapshot.chat[index]);
+                              },
+                            );
+                          } else {
+                            return const Center(
+                              child: Text("no data yet"),
+                            );
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               ChatInput(
                 tunel: name.tunelid,
@@ -125,7 +127,7 @@ class ChatText extends StatelessWidget {
               gradient: LinearGradient(colors: [Colors.pink, Colors.purple])),
           child: Text(
             chat.content,
-            style: const TextStyle(color: Colors.black),
+            // style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
         ),
       );
@@ -237,5 +239,11 @@ class _ClockState extends State<Clock> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    countdown();
+    super.dispose();
   }
 }

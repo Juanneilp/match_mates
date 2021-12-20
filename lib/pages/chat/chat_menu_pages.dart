@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
-import 'package:match_mates/provider/db_provider.dart';
-import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
@@ -19,18 +17,24 @@ class ChatMenu extends StatelessWidget {
         title: const Text("Chat History"),
       ),
       body: Consumer<ProfileProvider>(
-        builder: (context, ProfileProvider snapshot, child) =>
-            snapshot.user.friends.isNotEmpty
-                ? ListView.builder(
-                    itemCount: snapshot.user.friends.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return UserTile(name: snapshot.user.friends[index]);
-                    },
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-      ),
+          builder: (context, ProfileProvider snapshot, child) {
+        if (snapshot.user.friends.isNotEmpty) {
+          return ListView.builder(
+            itemCount: snapshot.user.friends.length,
+            itemBuilder: (BuildContext context, int index) {
+              return UserTile(name: snapshot.user.friends[index]);
+            },
+          );
+        } else if (snapshot.user.friends.isEmpty) {
+          return Center(
+            child: Text("no data"),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }),
     );
   }
 }
@@ -114,7 +118,9 @@ class _ModalBottomState extends State<ModalBottom> {
 
   Widget chipBuild(String text, BuildContext context) {
     final bool option = selected == text;
-    final color = option ? Colors.pink : Colors.green;
+    final color = option
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.secondary;
 
     return InkWell(
       onTap: () {
