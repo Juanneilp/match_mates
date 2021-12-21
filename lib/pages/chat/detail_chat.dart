@@ -79,6 +79,7 @@ class DetailsChat extends StatelessWidget {
 class HeaderChat extends StatelessWidget {
   final String imageLink;
   final String name;
+
   const HeaderChat({Key? key, required this.imageLink, required this.name})
       : super(key: key);
 
@@ -111,6 +112,7 @@ class HeaderChat extends StatelessWidget {
 
 class ChatText extends StatelessWidget {
   final Chat chat;
+
   const ChatText({Key? key, required this.chat}) : super(key: key);
 
   @override
@@ -150,6 +152,7 @@ class ChatText extends StatelessWidget {
 
 class ChatInput extends StatefulWidget {
   final String tunel;
+
   const ChatInput({Key? key, required this.tunel}) : super(key: key);
 
   @override
@@ -158,6 +161,7 @@ class ChatInput extends StatefulWidget {
 
 class _ChatInputState extends State<ChatInput> {
   final _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final owner = Provider.of<ProfileProvider>(context).user;
@@ -203,6 +207,7 @@ class _ChatInputState extends State<ChatInput> {
 
 class Clock extends StatefulWidget {
   int time;
+
   Clock({Key? key, required this.time}) : super(key: key);
 
   @override

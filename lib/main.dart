@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/bottom_nav.dart';
+import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/pages/echat/list_echat.dart';
 import 'package:match_mates/pages/hangout/list_hangout.dart';
-import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/pages/login/signup_page.dart';
 import 'package:match_mates/pages/notification_page.dart';
@@ -38,49 +38,48 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          Provider<AuthServices>(create: (_) => AuthServices()),
-          ChangeNotifierProvider<DatabaseProvider>(
-              create: (_) =>
-                  DatabaseProvider(databaseHelper: DatabaseHelper())),
-          ChangeNotifierProvider<PreferancesProvider>(
-            create: (_) => PreferancesProvider(
-              prefencesHelper: PrefencesHelper(
-                sharedPreferences: SharedPreferences.getInstance(),
-              ),
+      providers: [
+        Provider<AuthServices>(create: (_) => AuthServices()),
+        ChangeNotifierProvider<DatabaseProvider>(
+            create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())),
+        ChangeNotifierProvider<PreferancesProvider>(
+          create: (_) => PreferancesProvider(
+            prefencesHelper: PrefencesHelper(
+              sharedPreferences: SharedPreferences.getInstance(),
             ),
           ),
-          ChangeNotifierProvider<ProfileProvider>(
-              create: (_) => ProfileProvider(
-                  username: UserService().getUser()?.uid ?? "")),
-          ChangeNotifierProvider<ListProfileProvider>(
-            create: (_) => ListProfileProvider(),
-          ),
-        ],
-        builder: (context, child) => OverlaySupport(
-              child: MaterialApp(
-                themeMode: Provider.of<PreferancesProvider>(context).isDarktheme
-                    ? ThemeMode.dark
-                    : ThemeMode.light,
-                theme: CustomTheme.lightTheme,
-                darkTheme: CustomTheme.darkTheme,
-                initialRoute: Wrapper.routeNamed,
-                routes: {
-                  Wrapper.routeNamed: (context) => Wrapper(),
-                  SignInPage.routeNamed: (context) => SignInPage(),
-                  SignUpPage.routeNamed: (context) => SignUpPage(),
-                  BottomNavigation.routeNamed: (context) =>
-                      const BottomNavigation(),
-                  DetailsChat.routeNamed: (context) => DetailsChat(
-                      arguments: ModalRoute.of(context)?.settings.arguments
-                          as DetailChatArguments),
-                  NotificationPage.routeNamed: (context) => NotificationPage(),
-                  SettingsEditPage.routeNamed: (context) => SettingsEditPage(
-                      user: ModalRoute.of(context)?.settings.arguments as User),
-                  EChatListPage.routeNamed: (context) => EChatListPage(),
-                  HangoutListPage.routeNamed: (context) => HangoutListPage()
-                },
-              ),
-            ));
+        ),
+        ChangeNotifierProvider<ProfileProvider>(
+            create: (_) =>
+                ProfileProvider(username: UserService().getUser()?.uid ?? "")),
+        ChangeNotifierProvider<ListProfileProvider>(
+          create: (_) => ListProfileProvider(),
+        ),
+      ],
+      builder: (context, child) => OverlaySupport(
+        child: MaterialApp(
+          themeMode: Provider.of<PreferancesProvider>(context).isDarktheme
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          theme: CustomTheme.lightTheme,
+          darkTheme: CustomTheme.darkTheme,
+          initialRoute: Wrapper.routeNamed,
+          routes: {
+            Wrapper.routeNamed: (context) => Wrapper(),
+            SignInPage.routeNamed: (context) => SignInPage(),
+            SignUpPage.routeNamed: (context) => SignUpPage(),
+            BottomNavigation.routeNamed: (context) => const BottomNavigation(),
+            DetailsChat.routeNamed: (context) => DetailsChat(
+                arguments: ModalRoute.of(context)?.settings.arguments
+                    as DetailChatArguments),
+            NotificationPage.routeNamed: (context) => NotificationPage(),
+            SettingsEditPage.routeNamed: (context) => SettingsEditPage(
+                user: ModalRoute.of(context)?.settings.arguments as User),
+            EChatListPage.routeNamed: (context) => EChatListPage(),
+            HangoutListPage.routeNamed: (context) => HangoutListPage()
+          },
+        ),
+      ),
+    );
   }
 }

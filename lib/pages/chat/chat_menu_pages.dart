@@ -41,6 +41,7 @@ class ChatMenu extends StatelessWidget {
 
 class UserTile extends StatelessWidget {
   final Friend name;
+
   const UserTile({
     Key? key,
     required this.name,
@@ -65,6 +66,7 @@ class UserTile extends StatelessWidget {
 
 class ModalBottom extends StatefulWidget {
   final Friend user;
+
   const ModalBottom({Key? key, required this.user}) : super(key: key);
 
   @override
