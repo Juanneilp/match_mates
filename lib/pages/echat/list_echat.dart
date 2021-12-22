@@ -135,6 +135,23 @@ Widget _ListEChat(BuildContext context, DocumentSnapshot document) {
                     ],
                   ),
                 ),
+                Container(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.orangeAccent,
+                      ),
+                      Text(
+                        '${document['rating']}',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

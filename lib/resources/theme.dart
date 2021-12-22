@@ -16,6 +16,9 @@ class CustomTheme {
           subtitle1: TextStyle(color: Colors.white)));
 
   static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.blueGrey.shade300,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.pink
+    ),
+    scaffoldBackgroundColor: Colors.white70,
   );
 }
