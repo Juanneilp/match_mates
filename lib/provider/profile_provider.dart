@@ -10,7 +10,17 @@ class ProfileProvider extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
   User? _user;
   User get user =>
-      _user ?? User(name: "", uid: "", imagelinks: "", friends: []);
+      _user ??
+      User(
+          name: "",
+          uid: "",
+          imagelinks: "",
+          friends: [],
+          bio: "",
+          city: "",
+          gender: "",
+          talent: false,
+          token: 0);
   String? _massage;
   String get massage => _massage ?? "";
   Future<dynamic> getUser() async {
@@ -31,7 +41,23 @@ class ProfileProvider extends ChangeNotifier {
             if (value.exists)
               {
                 result.update({'name': name}),
-                notifyListeners(),
+              }
+            else
+              {
+                _massage = "error update",
+              }
+          },
+        );
+    getUser();
+  }
+
+  Future<dynamic> setBiouser(String bio) async {
+    var result = _firestore.collection('users').doc(username);
+    await result.get().then(
+          (value) async => {
+            if (value.exists)
+              {
+                result.update({'bio': bio}),
               }
             else
               {
@@ -40,6 +66,25 @@ class ProfileProvider extends ChangeNotifier {
               }
           },
         );
+    getUser();
+  }
+
+  Future<dynamic> setCityuser(String city) async {
+    var result = _firestore.collection('users').doc(username);
+    await result.get().then(
+          (value) async => {
+            if (value.exists)
+              {
+                result.update({'city': city}),
+              }
+            else
+              {
+                _massage = "error update",
+                notifyListeners(),
+              }
+          },
+        );
+    getUser();
   }
 
   Future<dynamic> setImgUser(String img) async {
@@ -49,19 +94,19 @@ class ProfileProvider extends ChangeNotifier {
             if (value.exists)
               {
                 result.update({'imagelinks': img}),
-                getUser(),
               }
             else
               {
                 _massage = "error update",
+                notifyListeners(),
               }
           },
         );
+    getUser();
   }
 
   Future<String> connection(User recive, User profile) async {
     String tunelid = "";
-    print("test${recive.uid},${profile.uid}");
     var friends = profile.friends;
     if (friends.isNotEmpty) {
       for (var element in friends) {

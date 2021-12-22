@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/service/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _cityController = TextEditingController();
 
   bool _obscureText = true;
   bool _isLoading = false;
@@ -107,6 +107,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextField(
+                              controller: _cityController,
+                              decoration: InputDecoration(labelText: 'City'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                           ],
                         ),
                       ),
@@ -126,7 +136,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                 await authService.signUp(
                                     _emailController.text,
                                     _passwordController.text,
-                                    _fullNameController.text);
+                                    _fullNameController.text,
+                                    "male",
+                                    _cityController.text);
                                 Navigator.pushReplacementNamed(
                                     context, SignInPage.routeNamed);
                               } catch (e) {
@@ -163,6 +175,7 @@ class _SignUpPageState extends State<SignUpPage> {
     _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _cityController.dispose();
     super.dispose();
   }
 }

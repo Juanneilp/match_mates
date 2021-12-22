@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:match_mates/model/user.dart';
-import 'package:match_mates/resources/db.dart';
 
 class UserService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
@@ -10,27 +9,31 @@ class UserService {
     return _firebaseAuth.currentUser;
   }
 
-  void createUser(String name) async {
+  void createUser(String name, String bio, String gender, String city) async {
     final user = _firebaseAuth.currentUser;
     final userRef = _firestore.collection('users').doc(user!.uid);
     userRef.get().then((value) async => {
           if (value.exists)
-            {print('exist')}
+            {}
           else
             {
-              await userRef.set(
-                  User(name: name, imagelinks: "", friends: [], uid: user.uid)
-                      .toJson()),
-              await DatabaseHelper().insertUser(
-                  User(name: name, imagelinks: "", friends: [], uid: user.uid))
+              await userRef.set(User(
+                      name: name,
+                      imagelinks: "",
+                      friends: [],
+                      uid: user.uid,
+                      bio: bio,
+                      city: city,
+                      gender: gender,
+                      talent: false,
+                      token: 0)
+                  .toJson()),
             }
         });
   }
 
   Future<String> createConnection(User recive, User sender) async {
     late String id;
-    print("ini sender${sender.uid}");
-    print("ini sender${recive.uid}");
     await _firestore.collection('massage').add({
       'chat': [],
       'reciver': recive.name,
@@ -56,8 +59,6 @@ class UserService {
             .toJson()
       ])
     });
-    // await DatabaseHelper().insertFriend(Friend(
-    //     nameid: recive.uid, imagelinks: "", name: recive.name, tunelid: id));
     return id;
   }
 }

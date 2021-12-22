@@ -36,21 +36,25 @@ class Chat {
     required this.content,
     required this.createdAt,
     required this.owner,
+    required this.type,
   });
 
   String content;
   Timestamp createdAt;
   String owner;
+  String? type;
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
         content: json["content"],
         createdAt: json["createdAt"],
         owner: json["owner"],
+        type: json['type'],
       );
 
   Map<String, dynamic> toJson() => {
         "content": content,
         "createdAt": createdAt,
         "owner": owner,
+        "type": type,
       };
 }

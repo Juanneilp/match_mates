@@ -1,22 +1,30 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:match_mates/model/data_dummy.dart';
+import 'package:match_mates/model/text_chat.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/provider/chat_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
+import 'package:match_mates/resources/editpage.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
 class DetailsChat extends StatelessWidget {
-  const DetailsChat({Key? key, required this.arguments}) : super(key: key);
+  DetailsChat({Key? key, required this.arguments}) : super(key: key);
   static const routeNamed = "/details_chat";
   final DetailChatArguments arguments;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    Timer(
+        const Duration(seconds: 2),
+        () => _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(seconds: 2),
+            curve: Curves.fastOutSlowIn));
     final Friend name = arguments.user;
     final int time = int.parse(arguments.price);
     return StreamProvider<TextChat>(
@@ -33,9 +41,13 @@ class DetailsChat extends StatelessWidget {
                 name: name.name,
                 imageLink: name.imagelinks,
               ),
-              Center(child: Clock(time: time)),
             ],
           ),
+          actions: [
+            Center(child: Clock(time: time)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.phone))
+          ],
         ),
         body: SafeArea(
           child: Stack(
@@ -49,6 +61,7 @@ class DetailsChat extends StatelessWidget {
                         builder: (context, TextChat snapshot, child) {
                           if (snapshot.chat.isNotEmpty) {
                             return ListView.builder(
+                              controller: _scrollController,
                               itemCount: snapshot.chat.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return ChatText(chat: snapshot.chat[index]);
@@ -65,8 +78,11 @@ class DetailsChat extends StatelessWidget {
                   ],
                 ),
               ),
-              ChatInput(
-                tunel: name.tunelid,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: ChatInput(
+                  tunel: name.tunelid,
+                ),
               )
             ],
           ),
@@ -116,34 +132,66 @@ class ChatText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentuser = Provider.of<ProfileProvider>(context).user;
-    if (chat.owner != currentuser.name) {
-      return Align(
-        alignment: Alignment.topLeft,
-        child: Container(
-          margin: const EdgeInsets.all(8),
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(25)),
-              gradient: LinearGradient(colors: [Colors.pink, Colors.purple])),
-          child: Text(
-            chat.content,
-            // style: TextStyle(color: Theme.of(context).colorScheme.primary),
+    if (chat.owner != currentuser.uid) {
+      if (chat.type == "image") {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+                width: 150,
+                height: 150,
+                child: Image.network(
+                  chat.content,
+                  fit: BoxFit.cover,
+                )),
           ),
-        ),
-      );
+        );
+      } else {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                color: Theme.of(context).colorScheme.primary),
+            child: Text(
+              chat.content,
+              // style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            ),
+          ),
+        );
+      }
     } else {
-      return Align(
-        alignment: Alignment.topRight,
-        child: Container(
-          margin: const EdgeInsets.all(8),
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(25)),
-              gradient: LinearGradient(colors: [Colors.purple, Colors.pink])),
-          child:
-              Text(chat.content, style: const TextStyle(color: Colors.black)),
-        ),
-      );
+      if (chat.type == "image") {
+        return Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+                width: 150,
+                height: 150,
+                child: Image.network(
+                  chat.content,
+                  fit: BoxFit.cover,
+                )),
+          ),
+        );
+      } else {
+        return Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                color: Theme.of(context).colorScheme.primary),
+            child:
+                Text(chat.content, style: const TextStyle(color: Colors.black)),
+          ),
+        );
+      }
     }
   }
 }
@@ -172,7 +220,17 @@ class _ChatInputState extends State<ChatInput> {
           child: TextField(
             controller: _controller,
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.add),
+              prefixIcon: IconButton(
+                  onPressed: () async {
+                    File file = await selectFile();
+                    String url = await uploadFile(file);
+                    ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
+                        content: url,
+                        createdAt: Timestamp.now(),
+                        owner: owner.uid,
+                        type: "image"));
+                  },
+                  icon: const Icon(Icons.add)),
               hintText: "your massgae",
               border: InputBorder.none,
               suffixIcon: IconButton(
@@ -183,7 +241,8 @@ class _ChatInputState extends State<ChatInput> {
                     ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
                         content: _controller.text,
                         createdAt: Timestamp.now(),
-                        owner: owner.name));
+                        owner: owner.uid,
+                        type: "text"));
                     _controller.clear();
                   }
                 },
@@ -221,7 +280,7 @@ class _ClockState extends State<Clock> {
     return Center(
       child: Text(
         widget.time.toString(),
-        style: TextStyle(fontSize: 24),
+        style: const TextStyle(fontSize: 24),
       ),
     );
   }

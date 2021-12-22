@@ -14,11 +14,11 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int currentIndex = 3;
-  final tabScreen = [
-    const HomePage(),
+  final tabScreen = const [
+    HomePage(),
     SearchPage(),
-    const ChatMenu(),
-    const SettingsPage(),
+    ChatMenu(),
+    SettingsPage(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -26,11 +26,11 @@ class ChatMenu extends StatelessWidget {
             },
           );
         } else if (snapshot.user.friends.isEmpty) {
-          return Center(
+          return const Center(
             child: Text("no data"),
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -79,7 +79,7 @@ class _ModalBottomState extends State<ModalBottom> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text("choose price",
+        const Text("choose price",
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class _ModalBottomState extends State<ModalBottom> {
             chipBuild('60', context),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -101,7 +101,7 @@ class _ModalBottomState extends State<ModalBottom> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel')),
+              child: const Text('Cancel')),
           ElevatedButton(
               onPressed: () {
                 selected != ""
@@ -110,7 +110,7 @@ class _ModalBottomState extends State<ModalBottom> {
                             user: widget.user, price: selected))
                     : () {};
               },
-              child: Text('Confirm')),
+              child: const Text('Confirm')),
         ])
       ],
     );

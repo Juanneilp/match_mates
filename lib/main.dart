@@ -10,11 +10,9 @@ import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/pages/login/signup_page.dart';
 import 'package:match_mates/pages/notification_page.dart';
 import 'package:match_mates/pages/settings/settings_edit_page.dart';
-import 'package:match_mates/provider/db_provider.dart';
 import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/provider/shared_preferances.dart';
-import 'package:match_mates/resources/db.dart';
 import 'package:match_mates/resources/theme.dart';
 import 'package:match_mates/service/auth_service.dart';
 import 'package:match_mates/service/preferences_helper.dart';
@@ -40,9 +38,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           Provider<AuthServices>(create: (_) => AuthServices()),
-          ChangeNotifierProvider<DatabaseProvider>(
-              create: (_) =>
-                  DatabaseProvider(databaseHelper: DatabaseHelper())),
           ChangeNotifierProvider<PreferancesProvider>(
             create: (_) => PreferancesProvider(
               prefencesHelper: PrefencesHelper(
@@ -78,7 +73,8 @@ class MyApp extends StatelessWidget {
                   SettingsEditPage.routeNamed: (context) => SettingsEditPage(
                       user: ModalRoute.of(context)?.settings.arguments as User),
                   EChatListPage.routeNamed: (context) => EChatListPage(),
-                  HangoutListPage.routeNamed: (context) => HangoutListPage()
+                  HangoutListPage.routeNamed: (context) =>
+                      const HangoutListPage()
                 },
               ),
             ));

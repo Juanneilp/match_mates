@@ -9,37 +9,46 @@ class User {
     required this.name,
     required this.uid,
     required this.imagelinks,
+    required this.talent,
+    required this.token,
+    required this.bio,
+    required this.gender,
+    required this.city,
     required this.friends,
   });
 
   String name;
   String uid;
   String imagelinks;
+  bool talent;
+  int token;
+  String bio;
+  String gender;
+  String city;
   List<Friend> friends;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         name: json["name"],
         uid: json['uid'],
         imagelinks: json["imagelinks"],
+        talent: json['talent'],
+        token: json['token'],
+        bio: json['bio'],
+        gender: json['gender'],
+        city: json['city'],
         friends:
             List<Friend>.from(json["friends"].map((x) => Friend.fromJson(x))),
       );
-  factory User.fromDb(Map<String, dynamic> json) => User(
-      name: json["name"],
-      uid: json['uid'],
-      imagelinks: json["imagelinks"],
-      friends: []);
-
   Map<String, dynamic> toJson() => {
         "name": name,
         "uid": uid,
         "imagelinks": imagelinks,
+        "talent": talent,
+        "token": token,
+        "bio": bio,
+        "gender": gender,
+        "city": city,
         "friends": List<dynamic>.from(friends.map((x) => x.toJson())),
-      };
-  Map<String, dynamic> toDb() => {
-        "name": name,
-        "uid": uid,
-        "imagelinks": imagelinks,
       };
 }
 

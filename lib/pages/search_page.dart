@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
-import 'package:match_mates/provider/db_provider.dart';
 import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/resources/enum.dart';
-import 'package:match_mates/service/user_service.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 

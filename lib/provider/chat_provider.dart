@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:match_mates/model/data_dummy.dart';
+import 'package:match_mates/model/text_chat.dart';
 
 class ChatStreamProvider {
   final String streamTunel;

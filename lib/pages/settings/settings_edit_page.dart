@@ -18,6 +18,8 @@ class SettingsEditPage extends StatefulWidget {
 
 class _SettingsEditPageState extends State<SettingsEditPage> {
   final _controller = TextEditingController();
+  final _bioController = TextEditingController();
+  final _cityController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // var height = MediaQuery.of(context).size.height;
@@ -40,28 +42,38 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
                       linkImg: widget.user.imagelinks, size: 80)),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Fill your name"),
+          EditCard(
+            controller: _controller,
+            text: "Fill your Name",
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
+          EditCard(
+            controller: _bioController,
+            text: "Fill your Bio",
+          ),
+          EditCard(
+            controller: _cityController,
+            text: "Fill your City",
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
                 onPressed: () {
-                  Provider.of<ProfileProvider>(context, listen: false)
-                      .setNameuser(_controller.text);
-                  _controller.clear();
+                  if (_controller.text.isNotEmpty) {
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .setNameuser(_controller.text);
+                    _controller.clear();
+                  }
+                  if (_bioController.text.isNotEmpty) {
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .setBiouser(_bioController.text);
+                    _bioController.clear();
+                  }
+                  if (_cityController.text.isNotEmpty) {
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .setCityuser(_cityController.text);
+                    _cityController.clear();
+                  }
+                  Navigator.of(context).pop();
                 },
                 child: const Text("simpan")),
           )
@@ -73,6 +85,42 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
   @override
   void dispose() {
     _controller.dispose();
+    _bioController.dispose();
+    _cityController.dispose();
     super.dispose();
+  }
+}
+
+class EditCard extends StatelessWidget {
+  const EditCard({
+    Key? key,
+    required TextEditingController controller,
+    required this.text,
+  })  : _controller = controller,
+        super(key: key);
+
+  final TextEditingController _controller;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(text),
+          Card(
+            child: TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
