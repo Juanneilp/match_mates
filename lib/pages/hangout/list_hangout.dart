@@ -71,7 +71,7 @@ Widget _ListHangout(BuildContext context, DocumentSnapshot document) {
         borderRadius: BorderRadius.circular(25),
         child: Card(
           child: Container(
-            height: 120,
+            height: 140,
             width: MediaQuery.of(context).size.width,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ Widget _ListHangout(BuildContext context, DocumentSnapshot document) {
                   ),
                 ),
                 Container(
-                  width: 235,
+                  width: 240,
                   padding: EdgeInsets.only(left: 8, top: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,6 +100,13 @@ Widget _ListHangout(BuildContext context, DocumentSnapshot document) {
                             '${document['name']}',
                             style: TextStyle(fontSize: 20),
                           ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '${document['age']}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
                         ],
                       ),
                       SizedBox(
@@ -114,7 +121,28 @@ Widget _ListHangout(BuildContext context, DocumentSnapshot document) {
                       ),
                       Text('${document['regards']}'),
                       SizedBox(
-                        height: 12,
+                        height: 6,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            CupertinoIcons.location_solid,
+                            color: Colors.green,
+                            size: 20,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            '${document['city']}',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,

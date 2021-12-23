@@ -38,51 +38,50 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          Provider<AuthServices>(create: (_) => AuthServices()),
-          ChangeNotifierProvider<PreferancesProvider>(
-            create: (_) => PreferancesProvider(
-              prefencesHelper: PrefencesHelper(
-                sharedPreferences: SharedPreferences.getInstance(),
-              ),
+      providers: [
+        Provider<AuthServices>(create: (_) => AuthServices()),
+        ChangeNotifierProvider<PreferancesProvider>(
+          create: (_) => PreferancesProvider(
+            prefencesHelper: PrefencesHelper(
+              sharedPreferences: SharedPreferences.getInstance(),
             ),
           ),
-          ChangeNotifierProvider<ProfileProvider>(
-              create: (_) => ProfileProvider(
-                  username: UserService().getUser()?.uid ?? "")),
-          ChangeNotifierProvider<ListProfileProvider>(
-            create: (_) => ListProfileProvider(),
-          ),
-        ],
-        builder: (context, child) => OverlaySupport(
-              child: MaterialApp(
-                themeMode: Provider.of<PreferancesProvider>(context).isDarktheme
-                    ? ThemeMode.dark
-                    : ThemeMode.light,
-                theme: CustomTheme.lightTheme,
-                darkTheme: CustomTheme.darkTheme,
-                initialRoute: Wrapper.routeNamed,
-                routes: {
-                  Wrapper.routeNamed: (context) => Wrapper(),
-                  SignInPage.routeNamed: (context) => SignInPage(),
-                  SignUpPage.routeNamed: (context) => SignUpPage(),
-                  BottomNavigation.routeNamed: (context) =>
-                      const BottomNavigation(),
-                  DetailsChat.routeNamed: (context) => DetailsChat(
-                      arguments: ModalRoute.of(context)?.settings.arguments
-                          as DetailChatArguments),
-                  NotificationPage.routeNamed: (context) => NotificationPage(),
-                  SettingsEditPage.routeNamed: (context) => SettingsEditPage(
-                      user: ModalRoute.of(context)?.settings.arguments as User),
-                  EChatListPage.routeNamed: (context) => EChatListPage(),
-                  EChatDetailPage.routeNamed: (context) => EChatDetailPage(
-                        document: ModalRoute.of(context)?.settings.arguments
-                            as TalentModel,
-                      ),
-                  HangoutListPage.routeNamed: (context) =>
-                      const HangoutListPage()
-                },
-              ),
-            ));
+        ),
+        ChangeNotifierProvider<ProfileProvider>(
+            create: (_) =>
+                ProfileProvider(username: UserService().getUser()?.uid ?? "")),
+        ChangeNotifierProvider<ListProfileProvider>(
+          create: (_) => ListProfileProvider(),
+        ),
+      ],
+      builder: (context, child) => OverlaySupport.global(
+        child: MaterialApp(
+          themeMode: Provider.of<PreferancesProvider>(context).isDarktheme
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          theme: CustomTheme.lightTheme,
+          darkTheme: CustomTheme.darkTheme,
+          initialRoute: Wrapper.routeNamed,
+          routes: {
+            Wrapper.routeNamed: (context) => Wrapper(),
+            SignInPage.routeNamed: (context) => SignInPage(),
+            SignUpPage.routeNamed: (context) => SignUpPage(),
+            BottomNavigation.routeNamed: (context) => const BottomNavigation(),
+            DetailsChat.routeNamed: (context) => DetailsChat(
+                arguments: ModalRoute.of(context)?.settings.arguments
+                    as DetailChatArguments),
+            NotificationPage.routeNamed: (context) => NotificationPage(),
+            SettingsEditPage.routeNamed: (context) => SettingsEditPage(
+                user: ModalRoute.of(context)?.settings.arguments as User),
+            EChatListPage.routeNamed: (context) => EChatListPage(),
+            EChatDetailPage.routeNamed: (context) => EChatDetailPage(
+                  document:
+                      ModalRoute.of(context)?.settings.arguments as TalentModel,
+                ),
+            HangoutListPage.routeNamed: (context) => const HangoutListPage()
+          },
+        ),
+      ),
+    );
   }
 }
