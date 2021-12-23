@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
+import 'package:match_mates/model/talent_model.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/bottom_nav.dart';
+import 'package:match_mates/pages/chat/detail_chat.dart';
+import 'package:match_mates/pages/echat/detail_echat.dart';
 import 'package:match_mates/pages/echat/list_echat.dart';
 import 'package:match_mates/pages/hangout/list_hangout.dart';
-import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/pages/login/signup_page.dart';
 import 'package:match_mates/pages/notification_page.dart';
@@ -73,6 +75,10 @@ class MyApp extends StatelessWidget {
                   SettingsEditPage.routeNamed: (context) => SettingsEditPage(
                       user: ModalRoute.of(context)?.settings.arguments as User),
                   EChatListPage.routeNamed: (context) => EChatListPage(),
+                  EChatDetailPage.routeNamed: (context) => EChatDetailPage(
+                        document: ModalRoute.of(context)?.settings.arguments
+                            as TalentModel,
+                      ),
                   HangoutListPage.routeNamed: (context) =>
                       const HangoutListPage()
                 },

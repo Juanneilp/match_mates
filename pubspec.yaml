@@ -46,7 +46,7 @@ dependencies:
   sqflite: ^2.0.1
   file_picker: ^4.3.0
   firebase_storage: ^10.2.4
-  
+  expandable_text: ^2.2.0
 
 dev_dependencies:
   flutter_test:

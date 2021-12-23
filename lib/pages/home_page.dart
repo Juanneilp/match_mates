@@ -14,10 +14,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Text(
           'Match Mates',
-          style: TextStyle(color: Colors.black),
         ),
         automaticallyImplyLeading: false,
         actions: [
@@ -27,7 +25,6 @@ class HomePage extends StatelessWidget {
             },
             icon: Icon(
               CupertinoIcons.bell,
-              color: Colors.black,
             ),
           )
         ],
@@ -113,12 +110,16 @@ class HomePage extends StatelessWidget {
                           child: Container(
                             color: Colors.blueGrey,
                             child: Center(
-                              child: Text('E-Chat', style: TextStyle(color: Colors.white),),
+                              child: Text(
+                                'E-Chat',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
                         onTap: () {
-                          Navigator.pushNamed(context, EChatListPage.routeNamed);
+                          Navigator.pushNamed(
+                              context, EChatListPage.routeNamed);
                         },
                       )),
                   Flexible(
@@ -128,12 +129,16 @@ class HomePage extends StatelessWidget {
                         child: Container(
                           color: Colors.indigoAccent,
                           child: Center(
-                            child: Text('Hangout', style: TextStyle(color: Colors.white),),
+                            child: Text(
+                              'Hangout',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, HangoutListPage.routeNamed);
+                        Navigator.pushNamed(
+                            context, HangoutListPage.routeNamed);
                       },
                     ),
                   ),
@@ -155,7 +160,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.black12,
               height: 80,
               child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -171,7 +175,7 @@ class HomePage extends StatelessWidget {
                               height: 50,
                               width: 100,
                               child: Center(
-                                child: Text('Gaming'),
+                                child: Text('Coming Soon'),
                               ),
                             )
                           ],
@@ -190,26 +194,7 @@ class HomePage extends StatelessWidget {
                               height: 50,
                               width: 100,
                               child: Center(
-                                child: Text('Film'),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Card(
-                      child: Container(
-                        padding: EdgeInsets.all(15),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 100,
-                              child: Center(
-                                child: Text('Musik'),
+                                child: Text('Coming Soon'),
                               ),
                             )
                           ],
@@ -236,10 +221,7 @@ class HomePage extends StatelessWidget {
             ),
             Row(
               children: [
-                Container(
-                  height: 200,
-                  child: TestimonialCard()
-                ),
+                Container(height: 200, child: TestimonialCard()),
               ],
             )
           ],

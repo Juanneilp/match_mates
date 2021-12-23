@@ -15,17 +15,19 @@ class User {
     required this.gender,
     required this.city,
     required this.friends,
+    required this.sellers,
   });
 
   String name;
   String uid;
   String imagelinks;
   bool talent;
-  int token;
+  num token;
   String bio;
   String gender;
   String city;
   List<Friend> friends;
+  List<Sellers> sellers;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         name: json["name"],
@@ -38,6 +40,8 @@ class User {
         city: json['city'],
         friends:
             List<Friend>.from(json["friends"].map((x) => Friend.fromJson(x))),
+        sellers:
+            List<Sellers>.from(json["sellers"].map((y) => Sellers.fromJson(y))),
       );
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -49,6 +53,7 @@ class User {
         "gender": gender,
         "city": city,
         "friends": List<dynamic>.from(friends.map((x) => x.toJson())),
+        "sellers": List<dynamic>.from(sellers.map((x) => x.toJson())),
       };
 }
 
@@ -77,5 +82,37 @@ class Friend {
         "name": name,
         "nameid": nameid,
         "tunelid": tunelid,
+      };
+}
+
+class Sellers {
+  Sellers({
+    required this.nameid,
+    required this.tunelid,
+    required this.imagelinks,
+    required this.name,
+    required this.price,
+  });
+
+  String nameid;
+  String tunelid;
+  String imagelinks;
+  String name;
+  int price;
+
+  factory Sellers.fromJson(Map<String, dynamic> json) => Sellers(
+        imagelinks: json['imagelinks'],
+        name: json['name'],
+        nameid: json["nameid"],
+        tunelid: json["tunelid"],
+        price: json['price'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "imagelinks": imagelinks,
+        "name": name,
+        "nameid": nameid,
+        "tunelid": tunelid,
+        "price": price,
       };
 }

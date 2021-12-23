@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:match_mates/model/user.dart';
+import 'package:match_mates/model/talent.dart';
 import 'package:match_mates/resources/enum.dart';
 
 class ListProfileProvider extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
-  List<User>? _user;
-  List<User> get user => _user ?? [];
+  List<Talent>? _user;
+  List<Talent> get user => _user ?? [];
   String? _massage;
   String get massage => _massage ?? "";
   ResultState _state = ResultState.noData;
@@ -16,13 +16,13 @@ class ListProfileProvider extends ChangeNotifier {
       _state = ResultState.loading;
       notifyListeners();
       var result = await _firestore
-          .collection('users')
+          .collection('talent')
           .where('name', isGreaterThanOrEqualTo: username)
           .get();
       if (result.docs.isNotEmpty) {
         _state = ResultState.hasData;
         notifyListeners();
-        _user = result.docs.map((e) => User.fromJson(e.data())).toList();
+        _user = result.docs.map((e) => Talent.fromJson(e.data())).toList();
         return _user;
       } else {
         _state = ResultState.noData;

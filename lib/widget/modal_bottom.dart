@@ -1,83 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
+import 'package:match_mates/model/talent_model.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/resources/transaction.dart';
-import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
-class ChatMenu extends StatelessWidget {
-  const ChatMenu({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Chat History"),
-      ),
-      body: Consumer<ProfileProvider>(
-          builder: (context, ProfileProvider snapshot, child) {
-        if (snapshot.user.sellers.isNotEmpty) {
-          return ListView.builder(
-            itemCount: snapshot.user.sellers.length,
-            itemBuilder: (BuildContext context, int index) {
-              return UserTile(
-                name: snapshot.user.sellers[index],
-                user: snapshot.user,
-              );
-            },
-          );
-        } else if (snapshot.user.sellers.isEmpty) {
-          return const Center(
-            child: Text("no data"),
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      }),
-    );
-  }
-}
-
-class UserTile extends StatelessWidget {
-  final Sellers name;
-  final User user;
-
-  const UserTile({
-    Key? key,
-    required this.name,
-    required this.user,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: ProfilePicture(linkImg: name.imagelinks, size: 50),
-      title: Text(name.name),
-      trailing: const Icon(Icons.arrow_right),
-      onTap: () => showModalBottomSheet(
-          context: context,
-          builder: (context) => ModalBottom(
-                user: user,
-                sellers: name,
-                price: name.price,
-              )),
-    );
-  }
-}
-
 class ModalBottom extends StatefulWidget {
-  final Sellers sellers;
+  final TalentModel sellers;
   final User user;
   final int price;
+
   const ModalBottom(
       {Key? key,
-      required this.user,
       required this.sellers,
+      required this.user,
       required this.price})
       : super(key: key);
 
@@ -87,7 +25,6 @@ class ModalBottom extends StatefulWidget {
 
 class _ModalBottomState extends State<ModalBottom> {
   String selected = "";
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -123,14 +60,14 @@ class _ModalBottomState extends State<ModalBottom> {
                 print(widget.user.token);
                 if (selected != "" && widget.user.token > total.toInt()) {
                   TransactionBase().createTransaction(
-                      widget.sellers.nameid, widget.user.uid, total.toInt());
+                      widget.sellers.uid, widget.user.uid, total.toInt());
                   var tunelid =
                       Provider.of<ProfileProvider>(context, listen: false)
-                          .sellersConnection(widget.sellers, widget.user);
+                          .talentModelConnection(widget.sellers, widget.user);
                   var friends = Friend(
-                      nameid: widget.sellers.nameid,
+                      nameid: widget.sellers.uid,
                       tunelid: await tunelid,
-                      imagelinks: widget.sellers.imagelinks,
+                      imagelinks: widget.sellers.url,
                       name: widget.sellers.name);
                   Navigator.of(context).pushNamed(DetailsChat.routeNamed,
                       arguments:
@@ -156,9 +93,13 @@ class _ModalBottomState extends State<ModalBottom> {
         });
       },
       child: Chip(
+        avatar: const Icon(
+          Icons.album_sharp,
+          color: Colors.cyan,
+        ),
         label: Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
           ),
         ),

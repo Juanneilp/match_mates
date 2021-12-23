@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:match_mates/model/talent.dart';
+import 'package:match_mates/model/talent_model.dart';
 import 'package:match_mates/model/user.dart';
+import 'package:match_mates/service/user_service.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final String username;
@@ -12,6 +15,7 @@ class ProfileProvider extends ChangeNotifier {
   User get user =>
       _user ??
       User(
+          sellers: [],
           name: "",
           uid: "",
           imagelinks: "",
@@ -105,67 +109,59 @@ class ProfileProvider extends ChangeNotifier {
     getUser();
   }
 
-  Future<String> connection(User recive, User profile) async {
+  Future<String> talentConnection(Talent recive, User profile) async {
     String tunelid = "";
-    var friends = profile.friends;
-    if (friends.isNotEmpty) {
-      for (var element in friends) {
+    var sellers = profile.sellers;
+    if (sellers.isNotEmpty) {
+      for (var element in sellers) {
         if (element.nameid == recive.uid) {
           getUser();
           return tunelid = element.tunelid;
         }
       }
-      tunelid = await _firestore.collection('massage').add({
-        'chat': [],
-        'reciver': recive.name,
-        'sender': profile.name,
-      }).then((value) => tunelid = value.id);
-      await _firestore.collection('users').doc(recive.uid).update({
-        'friends': FieldValue.arrayUnion([
-          Friend(
-                  nameid: profile.uid,
-                  imagelinks: profile.imagelinks,
-                  name: profile.name,
-                  tunelid: tunelid)
-              .toJson()
-        ])
-      });
-      await _firestore.collection('users').doc(profile.uid).update({
-        'friends': FieldValue.arrayUnion([
-          Friend(
-                  nameid: recive.uid,
-                  imagelinks: recive.imagelinks,
-                  name: recive.name,
-                  tunelid: tunelid)
-              .toJson()
-        ])
-      });
+      tunelid = await UserService().createConnectionTalent(recive, profile);
     } else if (tunelid == "") {
-      tunelid = await _firestore.collection('massage').add({
-        'chat': [],
-        'reciver': recive.name,
-        'sender': profile.name,
-      }).then((value) => tunelid = value.id);
-      await _firestore.collection('users').doc(recive.uid).update({
-        'friends': FieldValue.arrayUnion([
-          Friend(
-                  nameid: profile.uid,
-                  imagelinks: profile.imagelinks,
-                  name: profile.name,
-                  tunelid: tunelid)
-              .toJson()
-        ])
-      });
-      await _firestore.collection('users').doc(profile.uid).update({
-        'friends': FieldValue.arrayUnion([
-          Friend(
-                  nameid: recive.uid,
-                  imagelinks: recive.imagelinks,
-                  name: recive.name,
-                  tunelid: tunelid)
-              .toJson()
-        ])
-      });
+      tunelid = await UserService().createConnectionTalent(recive, profile);
+    }
+    getUser();
+    return tunelid;
+  }
+
+  Future<String> talentModelConnection(TalentModel recive, User profile) async {
+    String tunelid = "";
+    var sellers = profile.sellers;
+    if (sellers.isNotEmpty) {
+      for (var element in sellers) {
+        if (element.nameid == recive.uid) {
+          getUser();
+          return tunelid = element.tunelid;
+        }
+      }
+      tunelid =
+          await UserService().createConnectionModelTalent(recive, profile);
+    } else if (tunelid == "") {
+      tunelid =
+          await UserService().createConnectionModelTalent(recive, profile);
+    }
+    getUser();
+    return tunelid;
+  }
+
+  Future<String> sellersConnection(Sellers recive, User profile) async {
+    String tunelid = "";
+    var sellers = profile.sellers;
+    if (sellers.isNotEmpty) {
+      for (var element in sellers) {
+        if (element.nameid == recive.nameid) {
+          getUser();
+          return tunelid = element.tunelid;
+        }
+      }
+      tunelid =
+          await UserService().createConnectionSellersTalent(recive, profile);
+    } else if (tunelid == "") {
+      tunelid =
+          await UserService().createConnectionSellersTalent(recive, profile);
     }
     getUser();
     return tunelid;

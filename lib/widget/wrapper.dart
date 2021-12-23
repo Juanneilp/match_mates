@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 class Wrapper extends StatelessWidget {
   static const routeNamed = '/';
 
+  const Wrapper({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthServices>(context);
@@ -16,9 +18,9 @@ class Wrapper extends StatelessWidget {
       builder: (_, AsyncSnapshot<Login?> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final Login? login = snapshot.data;
-          return login == null ? SignInPage() : BottomNavigation();
+          return login == null ? SignInPage() : const BottomNavigation();
         } else {
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
