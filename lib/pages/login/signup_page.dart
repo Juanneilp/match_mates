@@ -29,6 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
       onVerticalDragEnd: (DragEndDetails details) =>
           FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SingleChildScrollView(

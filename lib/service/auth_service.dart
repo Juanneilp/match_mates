@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/material.dart';
 import 'package:match_mates/model/login.dart';
 import 'package:match_mates/service/user_service.dart';
 
@@ -27,7 +28,13 @@ class AuthServices {
   Future<Login?> signIn(String email, String password) async {
     final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    return _userFromFirebase(credential.user);
+    if (credential.user!.emailVerified) {
+      return _userFromFirebase(credential.user);
+    } else {
+      final snackBar = SnackBar(
+          content:
+          Text("Verification Email"));
+    }
   }
 
   Future<void> signOut() async {

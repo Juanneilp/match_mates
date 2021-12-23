@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.CSD176.match_mates">
 
-    
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="match_mates"
+        android:label="Match Mates"
        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

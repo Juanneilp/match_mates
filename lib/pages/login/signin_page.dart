@@ -19,9 +19,6 @@ class _SignInPageState extends State<SignInPage> {
   bool _obscureText = true;
   bool _isLoading = false;
 
-  // void clearText() {
-  //   fieldText.clear();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +29,14 @@ class _SignInPageState extends State<SignInPage> {
       onVerticalDragEnd: (DragEndDetails details) =>
           FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             children: [
               Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 30),
+                  padding: EdgeInsets.only(left: 30, right: 30, bottom: 50, top: 40),
                   child: Column(
                     children: const [
                       Text(
@@ -50,12 +48,14 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 50, left: 45, bottom: 20),
-                child: Row(
-                  children: [
-                    Text('LOG IN', style: TextStyle(fontSize: 25)),
-                  ],
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20, left: 45, bottom: 20),
+                  child: Row(
+                    children: [
+                      Text('SIGN IN', style: TextStyle(fontSize: 25)),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -70,13 +70,6 @@ class _SignInPageState extends State<SignInPage> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.person),
                             labelText: 'Email',
-                            // suffixIcon: IconButton(
-                            //   onPressed: clearText,
-                            //   icon: Icon(
-                            //     Icons.close,
-                            //     size: 20,
-                            //   ),
-                            // ),
                           ),
                         );
                       },
@@ -111,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.lightBlueAccent,
                     ),
-                    child: Text('Login'),
+                    child: Text('Sign In'),
                     onPressed: () async {
                       setState(() {
                         _isLoading = true;
@@ -131,8 +124,6 @@ class _SignInPageState extends State<SignInPage> {
                           _isLoading = false;
                         });
                       }
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(BottomNavigation.routeNamed);
                     },
                   ),
                 ),

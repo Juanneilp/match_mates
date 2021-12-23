@@ -105,14 +105,15 @@ class HomePage extends StatelessWidget {
                 children: [
                   Flexible(
                       flex: 2,
-                      child: GestureDetector(
+                      child: InkWell(
+                        splashColor: Colors.white,
                         child: Card(
                           child: Container(
-                            color: Colors.blueGrey,
+                            color: Colors.indigo,
                             child: Center(
                               child: Text(
                                 'E-Chat',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -124,14 +125,15 @@ class HomePage extends StatelessWidget {
                       )),
                   Flexible(
                     flex: 2,
-                    child: GestureDetector(
+                    child: InkWell(
+                      splashColor: Colors.white,
                       child: Card(
                         child: Container(
-                          color: Colors.indigoAccent,
+                          color: Colors.teal,
                           child: Center(
                             child: Text(
                               'Hangout',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white, fontSize: 18),
                             ),
                           ),
                         ),

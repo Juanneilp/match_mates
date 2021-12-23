@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HangoutDetailPage extends StatelessWidget {
-
   final DocumentSnapshot document;
 
   HangoutDetailPage({required this.document});
@@ -11,13 +10,12 @@ class HangoutDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> hangout =
-    FirebaseFirestore.instance.collection('hangoutt').snapshots();
+        FirebaseFirestore.instance.collection('hangoutt').snapshots();
 
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
         stream: hangout,
-        builder:
-            (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Something went wrong.'));
           }
@@ -120,8 +118,8 @@ class HangoutDetailPage extends StatelessWidget {
                   // ),
                   width: MediaQuery.of(context).size.width,
                   child: Card(
-                    margin:
-                    EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 10),
+                    margin: EdgeInsets.only(
+                        top: 5, left: 10, right: 10, bottom: 10),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Column(
@@ -133,7 +131,8 @@ class HangoutDetailPage extends StatelessWidget {
                                 child: Text(
                                   'Hangout',
                                   style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.bold),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
@@ -187,7 +186,8 @@ class HangoutDetailPage extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: Card(
-                    margin: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+                    margin:
+                        EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
                     child: Column(
                       children: [
                         Padding(
@@ -218,7 +218,8 @@ class HangoutDetailPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Style : ',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Text('${document['style']}')
                                 ],
@@ -235,7 +236,8 @@ class HangoutDetailPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Feel to Free : ',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Text('${document['free']}')
                                 ],
@@ -243,7 +245,9 @@ class HangoutDetailPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 15,)
+                        SizedBox(
+                          height: 15,
+                        )
                       ],
                     ),
                   ),
@@ -252,7 +256,8 @@ class HangoutDetailPage extends StatelessWidget {
                   height: 100,
                   width: MediaQuery.of(context).size.width,
                   child: Card(
-                    margin: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+                    margin:
+                        EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
                     child: Column(
                       children: [
                         Padding(

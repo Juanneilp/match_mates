@@ -185,7 +185,7 @@ class TilesTalent extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.star,
-                          color: Colors.yellow,
+                          color: Colors.orangeAccent,
                         ),
                         Text(
                           model.rating.toString(),
