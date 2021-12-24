@@ -103,7 +103,7 @@ class ListHangout extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           child: Card(
             child: Container(
-              height: 120,
+              height: 140,
               width: MediaQuery.of(context).size.width,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +146,28 @@ class ListHangout extends StatelessWidget {
                         ),
                         Text(model.regards),
                         SizedBox(
-                          height: 12,
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              CupertinoIcons.location_solid,
+                              color: Colors.green,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Text(
+                              model.city,
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,

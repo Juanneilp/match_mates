@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:match_mates/model/text_chat.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
+import 'package:match_mates/model/text_chat.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/provider/chat_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
@@ -226,43 +227,44 @@ class _ChatInputState extends State<ChatInput> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-          decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(40)),
-          height: 40,
-          width: double.infinity,
-          child: TextField(
-            controller: _controller,
-            decoration: InputDecoration(
-              prefixIcon: IconButton(
-                  onPressed: () async {
-                    File file = await selectFile();
-                    String url = await uploadFile(file);
-                    ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
-                        content: url,
-                        createdAt: Timestamp.now(),
-                        owner: owner.uid,
-                        type: "image"));
-                  },
-                  icon: const Icon(Icons.add)),
-              hintText: "your massgae",
-              border: InputBorder.none,
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: () {
-                  if (_controller.text == "") {
-                  } else {
-                    ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
-                        content: _controller.text,
-                        createdAt: Timestamp.now(),
-                        owner: owner.uid,
-                        type: "text"));
-                    _controller.clear();
-                  }
+        decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(40)),
+        height: 40,
+        width: double.infinity,
+        child: TextField(
+          controller: _controller,
+          decoration: InputDecoration(
+            prefixIcon: IconButton(
+                onPressed: () async {
+                  File file = await selectFile();
+                  String url = await uploadFile(file);
+                  ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
+                      content: url,
+                      createdAt: Timestamp.now(),
+                      owner: owner.uid,
+                      type: "image"));
                 },
-              ),
+                icon: const Icon(Icons.add)),
+            hintText: "your massgae",
+            border: InputBorder.none,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.send),
+              onPressed: () {
+                if (_controller.text == "") {
+                } else {
+                  ChatStreamProvider(streamTunel: widget.tunel).adduser(Chat(
+                      content: _controller.text,
+                      createdAt: Timestamp.now(),
+                      owner: owner.uid,
+                      type: "text"));
+                  _controller.clear();
+                }
+              },
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 
@@ -301,7 +303,7 @@ class _ClockState extends State<Clock> {
   }
 
   void countdown() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(minutes: 1), (timer) {
       if (widget.time == 0 && mounted) {
         setState(() {
           timer.cancel();

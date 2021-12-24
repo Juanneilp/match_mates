@@ -7,6 +7,7 @@ import 'package:match_mates/model/user.dart';
 class UserService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+
   auth.User? getUser() {
     print(_firebaseAuth.currentUser!.uid);
     return _firebaseAuth.currentUser;
@@ -15,25 +16,27 @@ class UserService {
   void createUser(String name, String bio, String gender, String city) async {
     final user = _firebaseAuth.currentUser;
     final userRef = _firestore.collection('users').doc(user!.uid);
-    userRef.get().then((value) async => {
-          if (value.exists)
-            {}
-          else
-            {
-              await userRef.set(UserProfile(
-                      sellers: [],
-                      name: name,
-                      imagelinks: "",
-                      friends: [],
-                      uid: user.uid,
-                      bio: bio,
-                      city: city,
-                      gender: gender,
-                      talent: false,
-                      token: 0)
-                  .toJson()),
-            }
-        });
+    userRef.get().then(
+          (value) async => {
+            if (value.exists)
+              {}
+            else
+              {
+                await userRef.set(UserProfile(
+                        sellers: [],
+                        name: name,
+                        imagelinks: "",
+                        friends: [],
+                        uid: user.uid,
+                        bio: bio,
+                        city: city,
+                        gender: gender,
+                        talent: false,
+                        token: 1200)
+                    .toJson()),
+              }
+          },
+        );
   }
 
   Future<String> createConnectionModelTalent(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/hangout_model.dart';
+import 'package:match_mates/widget/upcoming_alert.dart';
 
 class HangoutDetailPage extends StatelessWidget {
   final HangoutModel model;
@@ -286,7 +287,9 @@ class HangoutDetailPage extends StatelessWidget {
         child: SizedBox(
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              showAlertDialog(context);
+            },
             child: Text('Order'),
           ),
         ),
