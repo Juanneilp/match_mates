@@ -7,12 +7,11 @@ class TestimonialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> testimonial =
-    FirebaseFirestore.instance.collection('testimonial').snapshots();
+        FirebaseFirestore.instance.collection('testimonial').snapshots();
 
     return StreamBuilder<QuerySnapshot>(
       stream: testimonial,
-      builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong.');
         }
@@ -65,4 +64,3 @@ class TestimonialCard extends StatelessWidget {
     );
   }
 }
-

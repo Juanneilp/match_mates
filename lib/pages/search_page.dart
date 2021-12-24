@@ -6,7 +6,6 @@ import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/resources/enum.dart';
-import 'package:match_mates/resources/transaction.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -103,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
 
 class BuildTileUser extends StatelessWidget {
   final Talent user;
-  final User userprofile;
+  final UserProfile userprofile;
   const BuildTileUser({Key? key, required this.user, required this.userprofile})
       : super(key: key);
 
@@ -128,7 +127,7 @@ class BuildTileUser extends StatelessWidget {
 
 class ModalBottom extends StatefulWidget {
   final Talent sellers;
-  final User user;
+  final UserProfile user;
   final int price;
 
   const ModalBottom(
@@ -178,8 +177,9 @@ class _ModalBottomState extends State<ModalBottom> {
                 print(selected != "");
                 print(widget.user.token);
                 if (selected != "" && widget.user.token > total.toInt()) {
-                  TransactionBase().createTransaction(
-                      widget.sellers.uid, widget.user.uid, total.toInt());
+                  await Provider.of<ProfileProvider>(context, listen: false)
+                      .createTransaction(
+                          widget.sellers.uid, widget.user.uid, total.toInt());
                   var tunelid =
                       Provider.of<ProfileProvider>(context, listen: false)
                           .talentConnection(widget.sellers, widget.user);

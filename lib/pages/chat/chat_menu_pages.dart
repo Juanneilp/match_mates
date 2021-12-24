@@ -4,7 +4,6 @@ import 'package:match_mates/model/detail_chat_modal.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/provider/profile_provider.dart';
-import 'package:match_mates/resources/transaction.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +44,7 @@ class ChatMenu extends StatelessWidget {
 
 class UserTile extends StatelessWidget {
   final Sellers name;
-  final User user;
+  final UserProfile user;
 
   const UserTile({
     Key? key,
@@ -72,7 +71,7 @@ class UserTile extends StatelessWidget {
 
 class ModalBottom extends StatefulWidget {
   final Sellers sellers;
-  final User user;
+  final UserProfile user;
   final int price;
   const ModalBottom(
       {Key? key,
@@ -119,11 +118,10 @@ class _ModalBottomState extends State<ModalBottom> {
           ElevatedButton(
               onPressed: () async {
                 var total = widget.sellers.price * (int.parse(selected) / 30);
-                print(selected != "");
-                print(widget.user.token);
                 if (selected != "" && widget.user.token > total.toInt()) {
-                  TransactionBase().createTransaction(
-                      widget.sellers.nameid, widget.user.uid, total.toInt());
+                  await Provider.of<ProfileProvider>(context, listen: false)
+                      .createTransaction(widget.sellers.nameid, widget.user.uid,
+                          total.toInt());
                   var tunelid =
                       Provider.of<ProfileProvider>(context, listen: false)
                           .sellersConnection(widget.sellers, widget.user);

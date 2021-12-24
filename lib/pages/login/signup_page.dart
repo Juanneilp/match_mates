@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:match_mates/resources/enum.dart';
 import 'package:match_mates/service/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _cityController = TextEditingController();
+  Gender? _gender = Gender.male;
 
   bool _obscureText = true;
   bool _isLoading = false;
@@ -29,7 +31,6 @@ class _SignUpPageState extends State<SignUpPage> {
       onVerticalDragEnd: (DragEndDetails details) =>
           FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -118,6 +119,33 @@ class _SignUpPageState extends State<SignUpPage> {
                             SizedBox(
                               height: 10,
                             ),
+                            Column(children: <Widget>[
+                              Text("Jenis Kelamin"),
+                              ListTile(
+                                title: Text("Male"),
+                                leading: Radio<Gender>(
+                                  value: Gender.male,
+                                  groupValue: _gender,
+                                  onChanged: (Gender? value) {
+                                    setState(() {
+                                      _gender = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                              ListTile(
+                                title: Text("Female"),
+                                leading: Radio<Gender>(
+                                  value: Gender.female,
+                                  groupValue: _gender,
+                                  onChanged: (Gender? value) {
+                                    setState(() {
+                                      _gender = value;
+                                    });
+                                  },
+                                ),
+                              )
+                            ])
                           ],
                         ),
                       ),
@@ -129,7 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: 50,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.lightBlueAccent,
+                              primary: Theme.of(context).colorScheme.primary,
                             ),
                             child: Text('SIGN UP'),
                             onPressed: () async {
@@ -138,7 +166,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     _emailController.text,
                                     _passwordController.text,
                                     _fullNameController.text,
-                                    "male",
+                                    _gender == Gender.male ? "male" : "female",
                                     _cityController.text);
                                 Navigator.pushReplacementNamed(
                                     context, SignInPage.routeNamed);

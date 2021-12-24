@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class SettingsEditPage extends StatefulWidget {
   static const routeNamed = "/edit_page";
-  final User user;
+  final UserProfile user;
   const SettingsEditPage({Key? key, required this.user}) : super(key: key);
 
   @override
@@ -22,10 +22,10 @@ class _SettingsEditPageState extends State<SettingsEditPage> {
   final _cityController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // var height = MediaQuery.of(context).size.height;
-    // var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Edit Data"),
+      ),
       body: SafeArea(
           child: ListView(
         children: <Widget>[

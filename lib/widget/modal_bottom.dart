@@ -4,12 +4,12 @@ import 'package:match_mates/model/talent_model.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/provider/profile_provider.dart';
-import 'package:match_mates/resources/transaction.dart';
+
 import 'package:provider/provider.dart';
 
 class ModalBottom extends StatefulWidget {
   final TalentModel sellers;
-  final User user;
+  final UserProfile user;
   final int price;
 
   const ModalBottom(
@@ -56,11 +56,10 @@ class _ModalBottomState extends State<ModalBottom> {
           ElevatedButton(
               onPressed: () async {
                 var total = widget.sellers.price * (int.parse(selected) / 30);
-                print(selected != "");
-                print(widget.user.token);
                 if (selected != "" && widget.user.token > total.toInt()) {
-                  TransactionBase().createTransaction(
-                      widget.sellers.uid, widget.user.uid, total.toInt());
+                  await Provider.of<ProfileProvider>(context, listen: false)
+                      .createTransaction(
+                          widget.sellers.uid, widget.user.uid, total.toInt());
                   var tunelid =
                       Provider.of<ProfileProvider>(context, listen: false)
                           .talentModelConnection(widget.sellers, widget.user);

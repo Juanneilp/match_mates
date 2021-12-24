@@ -113,7 +113,8 @@ class HomePage extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 'E-Chat',
-                                style: TextStyle(color: Colors.white, fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -133,7 +134,8 @@ class HomePage extends StatelessWidget {
                           child: Center(
                             child: Text(
                               'Hangout',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
                           ),
                         ),
@@ -177,7 +179,7 @@ class HomePage extends StatelessWidget {
                               height: 50,
                               width: 100,
                               child: Center(
-                                child: Text('Coming Soon'),
+                                child: Text('Funny'),
                               ),
                             )
                           ],
@@ -196,7 +198,7 @@ class HomePage extends StatelessWidget {
                               height: 50,
                               width: 100,
                               child: Center(
-                                child: Text('Coming Soon'),
+                                child: Text('Talkative '),
                               ),
                             )
                           ],

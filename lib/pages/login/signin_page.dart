@@ -19,7 +19,6 @@ class _SignInPageState extends State<SignInPage> {
   bool _obscureText = true;
   bool _isLoading = false;
 
-
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthServices>(context);
@@ -29,14 +28,14 @@ class _SignInPageState extends State<SignInPage> {
       onVerticalDragEnd: (DragEndDetails details) =>
           FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             children: [
               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 30, right: 30, bottom: 50, top: 40),
+                  padding:
+                      EdgeInsets.only(left: 30, right: 30, bottom: 50, top: 40),
                   child: Column(
                     children: const [
                       Text(
@@ -102,7 +101,7 @@ class _SignInPageState extends State<SignInPage> {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlueAccent,
+                      primary: Theme.of(context).colorScheme.primary,
                     ),
                     child: Text('Sign In'),
                     onPressed: () async {
@@ -115,9 +114,8 @@ class _SignInPageState extends State<SignInPage> {
                         Navigator.pushReplacementNamed(
                             context, BottomNavigation.routeNamed);
                       } catch (e) {
-                        final snackBar = SnackBar(
-                            content:
-                                Text("User tidak ditemukan"));
+                        final snackBar =
+                            SnackBar(content: Text("User tidak ditemukan"));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } finally {
                         setState(() {
@@ -139,9 +137,10 @@ class _SignInPageState extends State<SignInPage> {
                     onTap: () {
                       Navigator.pushNamed(context, SignUpPage.routeNamed);
                     },
-                    child: const Text(
+                    child: Text(
                       "Sign Up",
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ],

@@ -93,7 +93,7 @@ class ListEChat extends StatelessWidget {
 }
 
 class TilesTalent extends StatelessWidget {
-  TalentModel model;
+  final TalentModel model;
   TilesTalent({
     required this.model,
     Key? key,

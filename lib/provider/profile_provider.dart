@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:match_mates/model/talent.dart';
 import 'package:match_mates/model/talent_model.dart';
+import 'package:match_mates/model/tokeclass.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/service/user_service.dart';
 
@@ -11,10 +12,10 @@ class ProfileProvider extends ChangeNotifier {
     getUser();
   }
   final _firestore = FirebaseFirestore.instance;
-  User? _user;
-  User get user =>
+  UserProfile? _user;
+  UserProfile get user =>
       _user ??
-      User(
+      UserProfile(
           sellers: [],
           name: "",
           uid: "",
@@ -31,7 +32,7 @@ class ProfileProvider extends ChangeNotifier {
     var result = await _firestore.collection('users').doc(username).get();
     if (result.data()!.isNotEmpty) {
       notifyListeners();
-      return _user = User.fromJson(result.data()!);
+      return _user = UserProfile.fromJson(result.data()!);
     } else {
       notifyListeners();
       return _massage = "No Data";
@@ -109,7 +110,7 @@ class ProfileProvider extends ChangeNotifier {
     getUser();
   }
 
-  Future<String> talentConnection(Talent recive, User profile) async {
+  Future<String> talentConnection(Talent recive, UserProfile profile) async {
     String tunelid = "";
     var sellers = profile.sellers;
     if (sellers.isNotEmpty) {
@@ -127,7 +128,8 @@ class ProfileProvider extends ChangeNotifier {
     return tunelid;
   }
 
-  Future<String> talentModelConnection(TalentModel recive, User profile) async {
+  Future<String> talentModelConnection(
+      TalentModel recive, UserProfile profile) async {
     String tunelid = "";
     var sellers = profile.sellers;
     if (sellers.isNotEmpty) {
@@ -147,7 +149,7 @@ class ProfileProvider extends ChangeNotifier {
     return tunelid;
   }
 
-  Future<String> sellersConnection(Sellers recive, User profile) async {
+  Future<String> sellersConnection(Sellers recive, UserProfile profile) async {
     String tunelid = "";
     var sellers = profile.sellers;
     if (sellers.isNotEmpty) {
@@ -165,5 +167,42 @@ class ProfileProvider extends ChangeNotifier {
     }
     getUser();
     return tunelid;
+  }
+
+  Future<dynamic> createTransaction(
+      String recive, String sender, int value) async {
+    var sellers = _firestore.collection('talent').doc(recive);
+    var user = _firestore.collection('users').doc(sender);
+    await _firestore.collection('transaction').add({
+      'sellersuid': recive,
+      'senderuid': sender,
+      'value': value,
+    });
+    await sellers.update({
+      'token': FieldValue.increment(value),
+    });
+    await user.update(
+      {'token': FieldValue.increment(-(value - value * 0.1))},
+    );
+    getUser();
+  }
+
+  Future<String?> getPoints(String codetoken, String user) async {
+    try {
+      var amount =
+          await _firestore.collection('tokencode').doc(codetoken).get();
+      int value = TokenClass.fromJson(amount.data()!).amount;
+      await _firestore.collection('users').doc(user).update({
+        'token': FieldValue.increment(value),
+      }).then((value) async => {
+            await _firestore.collection('tokencode').doc(codetoken).delete(),
+          });
+      getUser();
+      return _massage = "Succes";
+    } catch (e) {
+      _massage = "error Redeem";
+      notifyListeners();
+      return _massage;
+    }
   }
 }

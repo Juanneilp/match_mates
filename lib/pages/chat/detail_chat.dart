@@ -8,7 +8,9 @@ import 'package:match_mates/model/user.dart';
 import 'package:match_mates/provider/chat_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
 import 'package:match_mates/resources/editpage.dart';
+import 'package:match_mates/widget/checking_alert.dart';
 import 'package:match_mates/widget/circle_avatar.dart';
+import 'package:match_mates/widget/upcoming_alert.dart';
 import 'package:provider/provider.dart';
 
 class DetailsChat extends StatelessWidget {
@@ -45,8 +47,16 @@ class DetailsChat extends StatelessWidget {
           ),
           actions: [
             Center(child: Clock(time: time)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.phone))
+            IconButton(
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+                icon: const Icon(Icons.video_call)),
+            IconButton(
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+                icon: const Icon(Icons.phone))
           ],
         ),
         body: SafeArea(
@@ -113,7 +123,7 @@ class HeaderChat extends StatelessWidget {
                   Icons.arrow_back,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  showCheckingAlertDialog(context);
                 },
               ),
             ),

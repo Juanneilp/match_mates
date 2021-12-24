@@ -1,16 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:match_mates/model/detail_chat_modal.dart';
+import 'package:match_mates/model/hangout_model.dart';
 import 'package:match_mates/model/talent_model.dart';
 import 'package:match_mates/model/user.dart';
 import 'package:match_mates/pages/bottom_nav.dart';
 import 'package:match_mates/pages/chat/detail_chat.dart';
 import 'package:match_mates/pages/echat/detail_echat.dart';
 import 'package:match_mates/pages/echat/list_echat.dart';
+import 'package:match_mates/pages/hangout/detail_hangout.dart';
 import 'package:match_mates/pages/hangout/list_hangout.dart';
 import 'package:match_mates/pages/login/signin_page.dart';
 import 'package:match_mates/pages/login/signup_page.dart';
 import 'package:match_mates/pages/notification_page.dart';
+import 'package:match_mates/pages/settings/about_page.dart';
+import 'package:match_mates/pages/settings/reedem_pages.dart';
 import 'package:match_mates/pages/settings/settings_edit_page.dart';
 import 'package:match_mates/provider/list_user_provider.dart';
 import 'package:match_mates/provider/profile_provider.dart';
@@ -73,14 +77,23 @@ class MyApp extends StatelessWidget {
                           as DetailChatArguments),
                   NotificationPage.routeNamed: (context) => NotificationPage(),
                   SettingsEditPage.routeNamed: (context) => SettingsEditPage(
-                      user: ModalRoute.of(context)?.settings.arguments as User),
+                      user: ModalRoute.of(context)?.settings.arguments
+                          as UserProfile),
                   EChatListPage.routeNamed: (context) => EChatListPage(),
                   EChatDetailPage.routeNamed: (context) => EChatDetailPage(
                         document: ModalRoute.of(context)?.settings.arguments
                             as TalentModel,
                       ),
                   HangoutListPage.routeNamed: (context) =>
-                      const HangoutListPage()
+                      const HangoutListPage(),
+                  HangoutDetailPage.routeNamed: (context) => HangoutDetailPage(
+                        model: ModalRoute.of(context)?.settings.arguments
+                            as HangoutModel,
+                      ),
+                  RedeemPage.routeNamed: (context) => RedeemPage(
+                      user: ModalRoute.of(context)?.settings.arguments
+                          as UserProfile),
+                  AboutPage.routeNamed: (context) => AboutPage(),
                 },
               ),
             ));

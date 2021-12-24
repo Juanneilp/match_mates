@@ -20,7 +20,7 @@ class UserService {
             {}
           else
             {
-              await userRef.set(User(
+              await userRef.set(UserProfile(
                       sellers: [],
                       name: name,
                       imagelinks: "",
@@ -37,7 +37,7 @@ class UserService {
   }
 
   Future<String> createConnectionModelTalent(
-      TalentModel recive, User sender) async {
+      TalentModel recive, UserProfile sender) async {
     late String id;
     await _firestore.collection('massage').add({
       'chat': [],
@@ -68,7 +68,8 @@ class UserService {
     return id;
   }
 
-  Future<String> createConnectionTalent(Talent recive, User sender) async {
+  Future<String> createConnectionTalent(
+      Talent recive, UserProfile sender) async {
     late String tunelid;
     await _firestore.collection('massage').add({
       'chat': [],
@@ -100,7 +101,7 @@ class UserService {
   }
 
   Future<String> createConnectionSellersTalent(
-      Sellers recive, User sender) async {
+      Sellers recive, UserProfile sender) async {
     late String tunelid;
     await _firestore.collection('massage').add({
       'chat': [],

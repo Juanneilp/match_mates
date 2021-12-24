@@ -13,7 +13,7 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  int currentIndex = 3;
+  int currentIndex = 0;
   final tabScreen = const [
     HomePage(),
     SearchPage(),
